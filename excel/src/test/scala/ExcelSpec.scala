@@ -24,12 +24,30 @@ class ExcelSpec extends Specification {
         implicit wb =>
           object sheet1 extends MyExcelSheet("excel spec - sheet one")
           object sheet2 extends MyExcelSheet("excel spec - sheet two")
+          object sheet3 extends MyExcelSheet("excel spec - sheet three")
+
+          val stream = new java.io.ByteArrayOutputStream
+          val streamAlternate = new java.io.ByteArrayOutputStream
+
           val file = File.createTempFile(getClass.getName+".", ".xls")
-          val writer1 = sheet1.writer(columns).toFile(file)
-          val writer2 = sheet2.writer(columns).toFile(file)
+          val fileWithEverything = File.createTempFile(getClass.getName+".", ".xls")
+
+          val writer1 = sheet1.writer(columns).toStream(stream)
+          val writer2 = sheet2.writer(columns).toStream(stream)
+          val writer3 = sheet2.writer(columns).toStream(streamAlternate)
+
           writer1.write(for (purchase <- Purchases.*.iterator) yield cellsF(purchase).row(sheet1))
           writer2.write(for (purchase <- Purchases.*.iterator) yield cellsF(purchase).row(sheet2))
+          writer3.write(for (purchase <- Purchases.*.iterator) yield cellsF(purchase).row(sheet3))
+
+          new FileOutputStream(file).write(stream.toByteArray)
+          new FileOutputStream(fileWithEverything).write(streamAlternate.toByteArray)
+
+          println("only contains one sheet")
           println(file)
+
+          println("contains everything, mismatched heading")
+          println(fileWithEverything)
       }
       success
     }
