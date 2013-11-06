@@ -34,7 +34,7 @@ class ExcelSpec extends Specification {
 
           val writer1 = sheet1.writer(columns).toStream(stream)
           val writer2 = sheet2.writer(columns).toStream(stream)
-          val writer3 = sheet2.writer(columns).toStream(streamAlternate)
+          val writer3 = sheet3.writer(columns).toStream(streamAlternate)
 
           writer1.write(for (purchase <- Purchases.*.iterator) yield cellsF(purchase).row(sheet1))
           writer2.write(for (purchase <- Purchases.*.iterator) yield cellsF(purchase).row(sheet2))
@@ -46,7 +46,7 @@ class ExcelSpec extends Specification {
           println("only contains one sheet")
           println(file)
 
-          println("contains everything, mismatched heading")
+          println("contains everything")
           println(fileWithEverything)
       }
       success
