@@ -89,7 +89,7 @@ abstract class Excel extends Format {
     }
   }
 
-  class Spawn(names: List[Option[String]]) extends WriterSpawn(names) {
+  class Factory(names: List[Option[String]]) extends WriterFactory(names) {
     /* There's a better way to stream an *SSF workbook to disk:
      http://poi.apache.org/spreadsheet/how-to.html#sxssf */
     def toStream(out: OutputStream): Writer = toStream(out, name = None)
@@ -131,7 +131,7 @@ abstract class Excel extends Format {
     }
   }
 
-  def writer(names: List[Option[String]]) = new Spawn(names)
+  def writer(names: List[Option[String]]) = new Factory(names)
 }
 
 object Excel {

@@ -47,7 +47,7 @@ class CSV extends Format {
   class DefaultDateTimeFormatter extends DateTimeFormatter(org.joda.time.format.DateTimeFormat.fullDateTime)
   class DefaultDoubleFormatter extends DoubleFormatter(new java.text.DecimalFormat("#,##0.00;-#,##0.00"))
 
-  class Spawn(names: List[Option[String]]) extends WriterSpawn(names) {
+  class Factory(names: List[Option[String]]) extends WriterFactory(names) {
     def toStream(out: OutputStream) = new Writer {
       lazy val pw = new PrintWriter(out)
       override def start() = pw.println(names.map(StringFormatter.quote).mkString(","))
@@ -56,5 +56,5 @@ class CSV extends Format {
     }
   }
 
-  def writer(names: List[Option[String]]) = new Spawn(names)
+  def writer(names: List[Option[String]]) = new Factory(names)
 }

@@ -36,7 +36,7 @@ trait JSON extends Format {
       row.copy(arr = row.arr ::: value :: Nil)
   }
 
-  class Spawn(names: List[Option[String]]) extends WriterSpawn(names) {
+  class Factory(names: List[Option[String]]) extends WriterFactory(names) {
     def toStream(out: OutputStream) = new Writer {
       val pw = new PrintWriter(out)
 
@@ -55,5 +55,5 @@ trait JSON extends Format {
     }
   }
 
-  def writer(names: List[Option[String]]) = new Spawn(names)
+  def writer(names: List[Option[String]]) = new Factory(names)
 }

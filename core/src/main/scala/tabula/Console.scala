@@ -15,7 +15,7 @@ abstract class Console(minWidth: Int = 15) extends Format {
     def appendBase[T <: Base](cell: T)(row: Row) = row ::: cell :: Nil
   }
 
-  class Spawn(names: List[Option[String]]) extends WriterSpawn(names) {
+  class Factory(names: List[Option[String]]) extends WriterFactory(names) {
     def padWidth[A](width: Int)(op: Int => A): A = op(if (width < minWidth) minWidth else width)
     val widths = names.map(_.map(_.size).getOrElse(minWidth))
     def padTo(width: Int, s: String) = ("%1$-"+width+"."+width+"s").format(s)
@@ -46,7 +46,7 @@ abstract class Console(minWidth: Int = 15) extends Format {
     def toStream(out: OutputStream) = toPrintWriter(new PrintWriter(out, true))
   }
 
-  def writer(names: List[Option[String]]) = new Spawn(names)
+  def writer(names: List[Option[String]]) = new Factory(names)
 
   implicit object StringFormatter extends SimpleFormatter[String] {
     def apply(value: Option[String]) = value :: Nil
