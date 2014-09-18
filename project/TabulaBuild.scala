@@ -5,7 +5,7 @@ import scalariform.formatter.preferences._
 
 object Versions {
   val ScalaVersion210 = "2.10.4"
-  val ScalaVersion211 = "2.11.0"
+  val ScalaVersion211 = "2.11.2"
   val ScalaTimeVersion = "0.6"
   val JodaTimeVersion = "2.1"
   val JodaConvertVersion = "1.2"
@@ -13,7 +13,7 @@ object Versions {
   val PoiVersion = "3.9"
   val Json4sVersion = "3.2.10"
   val CommonsLangVersion = "3.1"
-  val SpecsVersion = "2.3.12"
+  val SpecsVersion = "2.4.2"
 }
 
 object BuildSettings {
