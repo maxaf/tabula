@@ -85,14 +85,11 @@ object Extensibility {
   // here's a column that produces HTML from Purchase-s
   object Title extends Column((p: Purchase) => HTML(<title>{ p.item.name }</title>))
 
-  // create custom CSV output that overrides some default formats and
-  // implements conversion of NodeSeq-s to text (which is what CSV
-  // ultimately is)
-  object MyCSV extends CSV {
-    implicit val DoubleFormatter = new DoubleFormatter(new java.text.DecimalFormat("#,##0.00000;-#,##0.00000"))
-    implicit val DateTimeFormatter = new DateTimeFormatter(org.joda.time.format.DateTimeFormat.forPattern("dd MMM yyyy"))
+  // create custom console output that overrides some default formats and
+  // implements conversion of NodeSeq-s to text
+  object MyConsole extends Console(minWidth = 15) {
     implicit object NodeSeqFormatter extends SimpleFormatter[NodeSeq] {
-      def apply(value: Option[NodeSeq]) = StringFormatter.quote(value.map(_ \\ "title").map(_.toString)) :: Nil
+      def apply(value: Option[NodeSeq]) = value.map(_.toString) :: Nil
     }
   }
 }
@@ -115,7 +112,7 @@ class ShowcaseSpec extends Specification {
   "a purchase history" should {
     import ShowcaseSpec._
     "print out a list of things we've bought" in {
-      columns.write(MyCSV)(_.toConsole())(Purchases.*.iterator)
+      columns.write(MyConsole)(_.toConsole())(Purchases.*.iterator)
       success
     }
   }
