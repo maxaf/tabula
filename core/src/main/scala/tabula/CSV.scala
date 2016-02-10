@@ -3,7 +3,7 @@ package tabula
 import shapeless._
 import Tabula._
 import org.joda.time.DateTime
-import java.io.{ OutputStream, PrintWriter }
+import java.io.{OutputStream, PrintWriter}
 
 class CSV extends Format {
   type Base = String

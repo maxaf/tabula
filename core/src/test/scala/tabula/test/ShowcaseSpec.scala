@@ -64,7 +64,8 @@ object Tags extends ListColumn(
   Tag("foo") @@ "tag foo" ::
     Tag("bar") @@ "tag bar" ::
     Tag("baz") @@ "tag baz" ::
-    Tag("quux") @@ "tag quux" :: Nil)
+    Tag("quux") @@ "tag quux" :: Nil
+)
 
 // transformer column: capitalize words
 object Capitalize extends Column(capitalize)
@@ -104,7 +105,8 @@ object ShowcaseSpec {
       PurchaseLocation @@ "Bought At" ::
       DateOfPurchase @@ "Date of Purchase" ::
       Tags ::
-      HNil)
+      HNil
+  )
 }
 
 // let's do it!

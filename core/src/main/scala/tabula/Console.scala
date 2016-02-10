@@ -1,7 +1,7 @@
 package tabula
 
 import Tabula._
-import java.io.{ OutputStream, PrintWriter }
+import java.io.{OutputStream, PrintWriter}
 import org.joda.time._
 
 abstract class Console(minWidth: Int = 15) extends Format {

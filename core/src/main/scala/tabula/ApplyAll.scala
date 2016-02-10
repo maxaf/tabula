@@ -18,7 +18,7 @@ object ApplyAll {
     }
 
   implicit def hlistColumnApplyAll[F, T, C, L <: HList, O <: HList, Col](implicit aa: ApplyAll[F, L, O], ev: Col <:< Column[F, T, C]) =
-    new ApplyAll[F, Col :: L, ColumnAndCell[F, T, C]:: O] {
+    new ApplyAll[F, Col :: L, ColumnAndCell[F, T, C] :: O] {
       def apply(a: F, l: Col :: L) = l.head(a) :: aa(a, l.tail)
     }
 

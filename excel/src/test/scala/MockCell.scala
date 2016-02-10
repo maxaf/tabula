@@ -1,6 +1,6 @@
 package tabula.excel.test
 
-import org.apache.poi.ss.usermodel.{ Cell, CellStyle }
+import org.apache.poi.ss.usermodel.{Cell, CellStyle}
 
 class MockCell(underlying: Cell) extends Cell {
   private var _style = Option.empty[CellStyle]
@@ -63,6 +63,7 @@ class MockCell(underlying: Cell) extends Cell {
   def getStringCellValue(): String = ???
   def isPartOfArrayFormulaGroup(): Boolean = ???
   def removeCellComment(): Unit = ???
+  def removeHyperlink(): Unit = ???
   def setAsActiveCell(): Unit = ???
   def setCellComment(x$1: org.apache.poi.ss.usermodel.Comment): Unit = ???
   def setCellErrorValue(x$1: Byte): Unit = ???

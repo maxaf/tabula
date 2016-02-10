@@ -1,6 +1,6 @@
 package tabula.excel.test
 
-import org.apache.poi.ss.usermodel.{ Workbook, Sheet }
+import org.apache.poi.ss.usermodel.{Workbook, Sheet}
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import scala.collection.mutable.ArrayBuffer
 
@@ -77,4 +77,8 @@ class MockWorkbook(underlying: Workbook)(implicit me: MockExcel) extends Workboo
   def setSheetHidden(x$1: Int, x$2: Boolean): Unit = ???
   def setSheetName(x$1: Int, x$2: String): Unit = ???
   def setSheetOrder(x$1: String, x$2: Int): Unit = ???
+  def close(): Unit = ???
+  def linkExternalWorkbook(x$1: String, x$2: org.apache.poi.ss.usermodel.Workbook): Int = ???
+  def sheetIterator(): java.util.Iterator[org.apache.poi.ss.usermodel.Sheet] = ???
+  def iterator(): java.util.Iterator[org.apache.poi.ss.usermodel.Sheet] = ???
 }

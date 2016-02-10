@@ -3,7 +3,7 @@ package tabula.excel
 import shapeless._
 import tabula._
 import Tabula._
-import org.apache.poi.ss.usermodel.{ Workbook, Sheet, Row => ExcelRow, Cell => ExcelCell, CellStyle }
+import org.apache.poi.ss.usermodel.{Workbook, Sheet, Row => ExcelRow, Cell => ExcelCell, CellStyle}
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.joda.time._
 import java.io.OutputStream

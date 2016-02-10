@@ -74,7 +74,8 @@ trait Format extends Poly2 with Writers {
         .iterator
         .map(cellulize[String, String])
         .foldLeft(RowProto.emptyRow)(
-          (r, c) => RowProto.appendCell[String](c)(r))
+          (r, c) => RowProto.appendCell[String](c)(r)
+        )
     }
   }
 

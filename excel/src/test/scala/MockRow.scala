@@ -24,6 +24,7 @@ class MockRow(underlying: Row) extends Row {
   def getHeight(): Short = ???
   def getHeightInPoints(): Float = ???
   def getLastCellNum(): Short = ???
+  def getOutlineLevel(): Int = ???
   def getPhysicalNumberOfCells(): Int = ???
   def getRowNum(): Int = ???
   def getRowStyle(): org.apache.poi.ss.usermodel.CellStyle = ???

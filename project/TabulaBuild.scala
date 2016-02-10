@@ -4,16 +4,15 @@ import com.typesafe.sbt.SbtScalariform._
 import scalariform.formatter.preferences._
 
 object Versions {
-  val ScalaVersion210 = "2.10.4"
-  val ScalaVersion211 = "2.11.2"
-  val ScalaTimeVersion = "0.6"
-  val JodaTimeVersion = "2.1"
-  val JodaConvertVersion = "1.2"
-  val ShapelessVersion = "2.0.0"
-  val PoiVersion = "3.9"
-  val Json4sVersion = "3.2.10"
-  val CommonsLangVersion = "3.1"
-  val SpecsVersion = "2.4.2"
+  val ScalaVersion211 = "2.11.7"
+  val JodaTimeVersion = "2.9.2"
+  val JodaConvertVersion = "1.8"
+  val ShapelessVersion = "2.3.0-SNAPSHOT"
+  val PoiVersion = "3.13"
+  val Json4sVersion = "3.3.0"
+  val CommonsLangVersion = "3.4"
+  val SpecsVersion = "3.7"
+  val ScalazVersion = "7.2.0"
 }
 
 object BuildSettings {
@@ -24,9 +23,8 @@ object BuildSettings {
 
   lazy val buildSettings = Defaults.defaultSettings ++ Seq(
     organization := "com.bumnetworks",
-    version := "0.1.1-SNAPSHOT",
+    version := "0.1.2-SNAPSHOT",
     scalaVersion := ScalaVersion211,
-    crossScalaVersions := Seq(ScalaVersion210, ScalaVersion211),
     scalacOptions ++= Seq("-deprecation",  "-unchecked", "-feature", "-language:implicitConversions", "-language:reflectiveCalls"),
     shellPrompt := prompt,
     showTiming := true,
@@ -35,6 +33,7 @@ object BuildSettings {
     testFrameworks += TestFrameworks.Specs,
     libraryDependencies += "org.specs2" %% "specs2" % SpecsVersion % "test",
     offline := false,
+    resolvers += Resolver.sonatypeRepo("snapshots"),
     initialCommands in console in Test := """
     import tabula._
     import Tabula._
@@ -83,7 +82,7 @@ object BuildSettings {
 object Deps {
   import Versions._
 
-  val scalaz = "org.scalaz" %% "scalaz-core" % "7.0.6" % "provided"
+  val scalaz = "org.scalaz" %% "scalaz-core" % ScalazVersion % "provided"
   val joda_time = "joda-time" % "joda-time" % JodaTimeVersion % "provided"
   val joda_convert = "org.joda" % "joda-convert" % JodaConvertVersion % "provided"
   val commons_lang = "org.apache.commons" % "commons-lang3" % CommonsLangVersion % "test"

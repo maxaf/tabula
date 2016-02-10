@@ -6,7 +6,7 @@ import org.joda.time._
 import org.json4s._
 import org.json4s.native.JsonMethods._
 import shapeless._
-import java.io.{ OutputStream, PrintWriter }
+import java.io.{OutputStream, PrintWriter}
 
 trait JSON extends Format {
   type Base = JValue

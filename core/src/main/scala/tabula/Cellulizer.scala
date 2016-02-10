@@ -2,8 +2,8 @@ package tabula
 
 import Tabula._
 import org.joda.time._
-import scala.math.{ BigDecimal => ScalaBigDecimal }
-import java.math.{ BigDecimal => JavaBigDecimal }
+import scala.math.{BigDecimal => ScalaBigDecimal}
+import java.math.{BigDecimal => JavaBigDecimal}
 import scalaz._
 
 /** Type class for converting an intermediate representation `T` into
@@ -45,7 +45,8 @@ abstract class Cellulizer[T, C: Manifest](convert: T => C) {
   * producing [[Cell]][List[C]] cells.
   */
 class ListCellulizer[F, T, C: Manifest](implicit mc: Monoid[C]) extends Cellulizer[List[ColumnAndCell[F, T, C]], List[C]](
-  cacs => cacs.map(cac => cac._2.value.getOrElse(mc.zero)))
+  cacs => cacs.map(cac => cac._2.value.getOrElse(mc.zero))
+)
 
 /** Cellulizer starter kit. Contains [[Cellulizer]]s for enabling
   * commonly used conversions, making Tabula immediately useful in an

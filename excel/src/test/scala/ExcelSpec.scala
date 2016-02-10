@@ -1,6 +1,6 @@
 package tabula.excel.test
 
-import java.io.{ File, FileOutputStream }
+import java.io.{File, FileOutputStream}
 import tabula._
 import Tabula._
 import tabula.excel._
@@ -26,7 +26,8 @@ object Sheet1 {
       ItemPrice @@ "Item Price" ::
       PurchaseLocation @@ "Bought At" ::
       DateOfPurchase @@ "Date of Purchase" ::
-      HNil)
+      HNil
+  )
 
   val cellsF = cells(columns.columns)
 }
@@ -37,7 +38,8 @@ object Sheet2 {
   object columns extends Columns(
     (ItemName | Capitalize) @@ "Item Name" ::
       Tags ::
-      HNil)
+      HNil
+  )
 }
 
 class ExcelSpec extends Specification {

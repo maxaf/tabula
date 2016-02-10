@@ -2,7 +2,7 @@ package tabula
 
 import shapeless._
 import shapeless.ops.hlist._
-import java.io.{ File, OutputStream, FileOutputStream }
+import java.io.{File, OutputStream, FileOutputStream}
 
 trait Writers {
   self: Format =>

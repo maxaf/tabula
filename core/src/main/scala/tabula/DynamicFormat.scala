@@ -1,7 +1,7 @@
 package tabula
 
 import scala.reflect.ClassTag
-import scala.reflect.runtime.{ universe => ru }
+import scala.reflect.runtime.{universe => ru}
 
 case class DynamicFormat[F <: Format: ru.TypeTag: ClassTag](val fmt: F) {
   lazy val tpe = ru.typeOf[F]

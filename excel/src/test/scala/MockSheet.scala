@@ -116,4 +116,9 @@ class MockSheet(underlying: Sheet) extends Sheet {
   def showInPane(x$1: Short, x$2: Short): Unit = ???
   def ungroupColumn(x$1: Int, x$2: Int): Unit = ???
   def ungroupRow(x$1: Int, x$2: Int): Unit = ???
+  def getColumnOutlineLevel(x$1: Int): Int = ???
+  def getColumnWidthInPixels(x$1: Int): Float = ???
+  def getDataValidations(): java.util.List[_ <: org.apache.poi.ss.usermodel.DataValidation] = ???
+  def getMergedRegions(): java.util.List[org.apache.poi.ss.util.CellRangeAddress] = ???
+  def showInPane(x$1: Int, x$2: Int): Unit = ???
 }
