@@ -84,7 +84,7 @@ object Extensibility {
   implicit object HTMLNodeSeqCellulizer extends Cellulizer[HTML, NodeSeq](_.nodes)
 
   // here's a column that produces HTML from Purchase-s
-  object Title extends Column((p: Purchase) => HTML(<title>{ p.item.name }</title>))
+  object Title extends Column((p: Purchase) => HTML(<title>{ p.item.name }</title>)) with Namer
 
   // create custom console output that overrides some default formats and
   // implements conversion of NodeSeq-s to text

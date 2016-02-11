@@ -18,7 +18,8 @@ object NamedColumn {
           case list: ListColumn[_, _, _, _] => names(list.underlying)
           case _                            => named.name.value :: Nil
         }
-      case _ => None :: Nil
+      case namer: Namer => Some(namer.simpleName) :: Nil
+      case _            => None :: Nil
     }
   def names[F, T, C, NcT <: HList, Col](cols: Col :: NcT)(implicit ev: Col <:< Column[F, T, C], tl: ToList[Col :: NcT, Column[_, _, _]]): List[Option[String]] = names(cols.toList[Column[_, _, _]])
 }
