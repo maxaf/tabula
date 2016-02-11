@@ -35,11 +35,9 @@ object BuildSettings {
     offline := false,
     resolvers += Resolver.sonatypeRepo("snapshots"),
     initialCommands in console in Test := """
-    import tabula._
-    import Tabula._
-    import tabula.test._
+    import tabula._, Tabula._, Column._
     import shapeless._
-    import shapeless.HList._
+    import scalaz.std.AllInstances._
     """) ++ scalariformSettings ++ formatSettings
 
   lazy val publishSettings = Seq(

@@ -1,16 +1,13 @@
 package tabula.test
 
-import tabula._
-import Tabula._
-import Column._
+import tabula._, Tabula._, Column._
 import shapeless._
-import shapeless.HList._
+import scalaz.std.AllInstances._
+
 import org.specs2.mutable._
 import org.joda.time._
 import org.apache.commons.lang3.text.WordUtils.capitalize
 import org.apache.commons.lang3.RandomStringUtils.randomAscii
-import scalaz._
-import Scalaz._
 
 // a pretend data model
 
