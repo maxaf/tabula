@@ -1,3 +1,26 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Tabula: flip the table](#tabula-flip-the-table)
+  - [Getting started](#getting-started)
+  - [A quick tour of the premises](#a-quick-tour-of-the-premises)
+  - [Make some tweaks](#make-some-tweaks)
+    - [Naming the columns](#naming-the-columns)
+      - [Column name inference](#column-name-inference)
+      - [Manual column naming](#manual-column-naming)
+    - [Other output formats](#other-output-formats)
+      - [CSV output (in `tabula-core`)](#csv-output-in-tabula-core)
+      - [JSON output (in `tabula-json`)](#json-output-in-tabula-json)
+      - [Excel output (in `tabula-excel`)](#excel-output-in-tabula-excel)
+  - [Extending Tabula](#extending-tabula)
+    - [Support for additional data types](#support-for-additional-data-types)
+    - [New output formats](#new-output-formats)
+    - [A total conversion](#a-total-conversion)
+  - [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Tabula: flip the table
 
 Tabula is a small Scala library that provides structures and tooling that can
