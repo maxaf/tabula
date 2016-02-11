@@ -77,7 +77,7 @@ trait Cellulizers {
   implicit object DoubleDoubleCellulizer extends Cellulizer[Double, Double](identity)
 
   /** Cellulizer for `T =:= Float` and `C =:= Double` case. */
-  implicit object FlaotDoubleCellulizer extends Cellulizer[Float, Double](_.doubleValue)
+  implicit object FloatDoubleCellulizer extends Cellulizer[Float, Double](_.doubleValue)
 
   /** Cellulizer for `T =:= org.joda.time.DateTime` and `C =:= DateTime`
     * case. Nil transformation equivalent to `identity`.

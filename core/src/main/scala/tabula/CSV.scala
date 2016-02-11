@@ -1,6 +1,5 @@
 package tabula
 
-import shapeless._
 import Tabula._
 import org.joda.time.DateTime
 import java.io.{OutputStream, PrintWriter}
