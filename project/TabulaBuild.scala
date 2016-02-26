@@ -7,7 +7,7 @@ object Versions {
   val ScalaVersion211 = "2.11.7"
   val JodaTimeVersion = "2.9.2"
   val JodaConvertVersion = "1.8"
-  val ShapelessVersion = "2.3.0-SNAPSHOT"
+  val ShapelessVersion = "2.3.0"
   val PoiVersion = "3.13"
   val Json4sVersion = "3.3.0"
   val CommonsLangVersion = "3.4"
