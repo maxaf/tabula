@@ -4,7 +4,7 @@ import Tabula._
 import shapeless._
 import shapeless.ops.hlist._
 
-object Tabula extends Cellulizers with Aggregators {
+object Tabula extends Cellulizers {
   type ColumnAndCell[F, T, C] = (Column[F, T, C], Cell[C])
   type ColFun[F, T, C] = F => ColumnAndCell[F, T, C]
 

@@ -4,14 +4,14 @@ import com.typesafe.sbt.SbtScalariform._
 import scalariform.formatter.preferences._
 
 object Versions {
-  val ScalaVersion211 = "2.11.7"
+  val ScalaVersion211 = "2.11.8"
   val JodaTimeVersion = "2.9.2"
   val JodaConvertVersion = "1.8"
   val ShapelessVersion = "2.3.0"
   val PoiVersion = "3.13"
   val Json4sVersion = "3.3.0"
   val CommonsLangVersion = "3.4"
-  val SpecsVersion = "3.7"
+  val SpecsVersion = "3.7.2"
   val ScalazVersion = "7.2.0"
 }
 
@@ -31,7 +31,7 @@ object BuildSettings {
     parallelExecution := true,
     parallelExecution in Test := false,
     testFrameworks += TestFrameworks.Specs,
-    libraryDependencies += "org.specs2" %% "specs2" % SpecsVersion % "test",
+    libraryDependencies += "org.specs2" %% "specs2-core" % SpecsVersion % "test",
     offline := false,
     resolvers += Resolver.sonatypeRepo("snapshots"),
     initialCommands in console in Test := """
