@@ -12,7 +12,7 @@ object Versions {
   val Json4sVersion = "3.3.0"
   val CommonsLangVersion = "3.4"
   val SpecsVersion = "3.7.2"
-  val ScalazVersion = "7.2.0"
+  val CatsVersion = "0.4.1"
 }
 
 object BuildSettings {
@@ -37,7 +37,6 @@ object BuildSettings {
     initialCommands in console in Test := """
     import tabula._, Tabula._, Column._
     import shapeless._
-    import scalaz.std.AllInstances._
     """) ++ scalariformSettings ++ formatSettings
 
   lazy val publishSettings = Seq(
@@ -80,7 +79,7 @@ object BuildSettings {
 object Deps {
   import Versions._
 
-  val scalaz = "org.scalaz" %% "scalaz-core" % ScalazVersion % "provided"
+  val cats = "org.typelevel" %% "cats" % CatsVersion % "provided"
   val joda_time = "joda-time" % "joda-time" % JodaTimeVersion % "provided"
   val joda_convert = "org.joda" % "joda-convert" % JodaConvertVersion % "provided"
   val commons_lang = "org.apache.commons" % "commons-lang3" % CommonsLangVersion % "test"
@@ -98,7 +97,7 @@ object Deps {
   }
   val Reflection = Seq(libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value)
 
-  val CoreDeps = Seq(scalaz, joda_time, joda_convert, commons_lang)
+  val CoreDeps = Seq(cats, joda_time, joda_convert, commons_lang)
   val JsonDeps = Seq(json4s)
   val ExcelDeps = Seq(poi)
 }

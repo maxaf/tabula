@@ -6,8 +6,6 @@ import Column._
 import shapeless._
 import shapeless.HList._
 import org.specs2.mutable._
-import scalaz._
-import Scalaz._
 
 object NamerSpec {
   case class Person(first_name: String, last_name: String)

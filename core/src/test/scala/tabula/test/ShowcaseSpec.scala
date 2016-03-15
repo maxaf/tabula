@@ -2,7 +2,7 @@ package tabula.test
 
 import tabula._, Tabula._, Column._
 import shapeless._
-import scalaz.std.AllInstances._
+import cats.implicits._
 
 import org.specs2.mutable._
 import org.joda.time._

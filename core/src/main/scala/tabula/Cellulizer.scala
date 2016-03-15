@@ -4,7 +4,7 @@ import Tabula._
 import org.joda.time._
 import scala.math.{BigDecimal => ScalaBigDecimal}
 import java.math.{BigDecimal => JavaBigDecimal}
-import scalaz._
+import cats.Monoid
 
 /** Type class for converting an intermediate representation `T` into
   * a cell type `C`. Instances of this type class will be largely
@@ -45,7 +45,7 @@ abstract class Cellulizer[T, C: Manifest](convert: T => C) {
   * producing [[Cell]][List[C]] cells.
   */
 class ListCellulizer[F, T, C: Manifest](implicit mc: Monoid[C]) extends Cellulizer[List[ColumnAndCell[F, T, C]], List[C]](
-  cacs => cacs.map(cac => cac._2.value.getOrElse(mc.zero))
+  cacs => cacs.map(cac => cac._2.value.getOrElse(mc.empty))
 )
 
 /** Cellulizer starter kit. Contains [[Cellulizer]]s for enabling
