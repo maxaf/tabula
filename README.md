@@ -66,7 +66,7 @@ Now it's time to add the imports:
 ```scala
 import tabula._, Tabula._, Column._
 import shapeless._
-import scalaz.std.AllInstances._
+import cats.implicits._
 ```
 
 ## A quick tour of the premises
