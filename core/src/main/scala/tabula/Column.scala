@@ -77,7 +77,7 @@ object Column {
   * becoming a behavior intrinsic to the application's own domain
   * types.
   */
-abstract class Column[F, T, C](val f: F => Option[T])(implicit val cz: Cellulizer[T, C], val mf: Manifest[F]) extends ColFun[F, T, C] {
+abstract class Column[F, T, C](val f: F => Option[T])(implicit val cz: Cellulizer[T, C], val mf: Manifest[F]) extends ColFun[F, T, C] with Namer {
   def apply(source: F): ColumnAndCell[F, T, C] = this -> cz(source, f)
 
   class Transform[TT, CC](next: Column[T, TT, CC]) extends Column[F, TT, CC](f(_).flatMap(next.f))(next.cz, mf)

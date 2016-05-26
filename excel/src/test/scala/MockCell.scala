@@ -70,4 +70,5 @@ class MockCell(underlying: Cell) extends Cell {
   def setCellFormula(x$1: String): Unit = ???
   def setCellType(x$1: Int): Unit = ???
   def setHyperlink(x$1: org.apache.poi.ss.usermodel.Hyperlink): Unit = ???
+  def getAddress(): org.apache.poi.ss.util.CellAddress = ???
 }

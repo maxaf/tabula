@@ -47,7 +47,7 @@ class MockWorkbook(underlying: Workbook)(implicit me: MockExcel) extends Workboo
   def getName(x$1: String): org.apache.poi.ss.usermodel.Name = ???
   def getNameAt(x$1: Int): org.apache.poi.ss.usermodel.Name = ???
   def getNameIndex(x$1: String): Int = ???
-  def getNumCellStyles(): Short = ???
+  def getNumCellStyles(): Int = ???
   def getNumberOfFonts(): Short = ???
   def getNumberOfNames(): Int = ???
   def getNumberOfSheets(): Int = ???
@@ -81,4 +81,6 @@ class MockWorkbook(underlying: Workbook)(implicit me: MockExcel) extends Workboo
   def linkExternalWorkbook(x$1: String, x$2: org.apache.poi.ss.usermodel.Workbook): Int = ???
   def sheetIterator(): java.util.Iterator[org.apache.poi.ss.usermodel.Sheet] = ???
   def iterator(): java.util.Iterator[org.apache.poi.ss.usermodel.Sheet] = ???
+  def getCellStyleAt(x$1: Int): org.apache.poi.ss.usermodel.CellStyle = ???
+  def getSpreadsheetVersion(): org.apache.poi.ss.SpreadsheetVersion = ???
 }

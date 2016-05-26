@@ -121,4 +121,12 @@ class MockSheet(underlying: Sheet) extends Sheet {
   def getDataValidations(): java.util.List[_ <: org.apache.poi.ss.usermodel.DataValidation] = ???
   def getMergedRegions(): java.util.List[org.apache.poi.ss.util.CellRangeAddress] = ???
   def showInPane(x$1: Int, x$2: Int): Unit = ???
+  def getActiveCell(): org.apache.poi.ss.util.CellAddress = ???
+  def getCellComment(x$1: org.apache.poi.ss.util.CellAddress): org.apache.poi.ss.usermodel.Comment = ???
+  def getCellComments(): java.util.Map[org.apache.poi.ss.util.CellAddress, _ <: org.apache.poi.ss.usermodel.Comment] = ???
+  def getDrawingPatriarch(): org.apache.poi.ss.usermodel.Drawing = ???
+  def getHyperlink(x$1: Int, x$2: Int): org.apache.poi.ss.usermodel.Hyperlink = ???
+  def getHyperlinkList(): java.util.List[_ <: org.apache.poi.ss.usermodel.Hyperlink] = ???
+  def setActiveCell(x$1: org.apache.poi.ss.util.CellAddress): Unit = ???
+  def setZoom(x$1: Int): Unit = ???
 }
