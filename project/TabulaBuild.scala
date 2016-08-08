@@ -5,14 +5,14 @@ import scalariform.formatter.preferences._
 
 object Versions {
   val ScalaVersion211 = "2.11.8"
-  val JodaTimeVersion = "2.9.3"
+  val JodaTimeVersion = "2.9.4"
   val JodaConvertVersion = "1.8.1"
   val ShapelessVersion = "2.3.1"
   val PoiVersion = "3.14"
-  val Json4sVersion = "3.3.0"
+  val Json4sVersion = "3.4.0"
   val CommonsLangVersion = "3.4"
-  val SpecsVersion = "3.8.3"
-  val CatsVersion = "0.6.0"
+  val SpecsVersion = "3.8.4"
+  val CatsVersion = "0.6.1"
 }
 
 object BuildSettings {
