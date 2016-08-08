@@ -52,7 +52,13 @@ class CSV extends Format {
   }
 
   class DefaultDateTimeFormatter extends DateTimeFormatter(org.joda.time.format.DateTimeFormat.fullDateTime)
-  class DefaultDoubleFormatter extends DoubleFormatter(new java.text.DecimalFormat("#,##0.00;-#,##0.00"))
+
+  class SimpleDoubleFormatter(precision: Int = 2) extends DoubleFormatter({
+    require(precision >= 0)
+    val decimal = "0" * precision
+    new java.text.DecimalFormat(s"#,##0.${decimal};-#,##0.${decimal}")
+  })
+  class DefaultDoubleFormatter extends SimpleDoubleFormatter
 
   class Factory(names: List[Option[String]]) extends WriterFactory(names) {
     def toStream(out: OutputStream) = new Writer {
