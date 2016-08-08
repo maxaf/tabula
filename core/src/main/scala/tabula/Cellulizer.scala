@@ -54,10 +54,12 @@ class ListCellulizer[F, T, C: Manifest](implicit mc: Monoid[C]) extends Celluliz
   * extensions.
   */
 trait Cellulizers {
-  /** Cellulizer for `T =:= String` and `C =:= String` case. Nil
-    * transformation equivalent to `identity`.
-    */
-  implicit object StringStringCellulizer extends Cellulizer[String, String](identity)
+  /** Cellulizers for primitive types that Tabula understands natively. */
+  implicit object StringIdCellulizer extends Cellulizer[String, String](identity)
+  implicit object BooleanIdCellulizer extends Cellulizer[Boolean, Boolean](identity)
+  implicit object IntDoubleCellulizer extends Cellulizer[Int, Int](identity)
+  implicit object DoubleDoubleCellulizer extends Cellulizer[Double, Double](identity)
+  implicit object DateTimeDateTimeCellulizer extends Cellulizer[DateTime, DateTime](identity)
 
   /** Cellulizer for `T =:= scala.math.BigDecimal` and `C =:= Double` case. */
   implicit object ScalaBigDecimalDoubleCellulizer extends Cellulizer[ScalaBigDecimal, Double](_.doubleValue)
@@ -68,21 +70,8 @@ trait Cellulizers {
   /** Cellulizer for `T =:= Long` and `C =:= Double` case. */
   implicit object LongDoubleCellulizer extends Cellulizer[Long, Double](_.doubleValue)
 
-  /** Cellulizer for `T =:= Int` and `C =:= Double` case. */
-  implicit object IntDoubleCellulizer extends Cellulizer[Int, Double](_.doubleValue)
-
-  /** Cellulizer for `T =:= Double` and `C =:= Double` case. Nil
-    * transformation equivalent to `identity`.
-    */
-  implicit object DoubleDoubleCellulizer extends Cellulizer[Double, Double](identity)
-
   /** Cellulizer for `T =:= Float` and `C =:= Double` case. */
   implicit object FloatDoubleCellulizer extends Cellulizer[Float, Double](_.doubleValue)
-
-  /** Cellulizer for `T =:= org.joda.time.DateTime` and `C =:= DateTime`
-    * case. Nil transformation equivalent to `identity`.
-    */
-  implicit object DateTimeDateTimeCellulizer extends Cellulizer[DateTime, DateTime](identity)
 
   /** Perform ad-hoc short-circuit conversion of some `F` directly to
     * `C`, bypassing the intermediate `T` stage. Supported by

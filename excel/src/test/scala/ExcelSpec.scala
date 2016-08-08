@@ -23,9 +23,11 @@ object Sheet1 {
   object columns extends Columns(
     (ItemName | Capitalize) @@ "Item Name" ::
       Title ::
-      ItemPrice @@ "Item Price" ::
+      Total @@ "Purchase total" ::
+      Quantity @@ "How many?" ::
       PurchaseLocation @@ "Bought At" ::
       DateOfPurchase @@ "Date of Purchase" ::
+      Useless @@ "Is it useless?" ::
       HNil
   )
 
@@ -71,10 +73,10 @@ class ExcelSpec extends Specification {
 
       val header1 :: rows1 = sheet1.rows()
       Purchases.*.zip(rows1).foreach {
-        case (Purchase(UselessItem(_name, _price, _), _date, PretentiousPurveyor(_, _location)), row) =>
-          val name :: _ :: price :: location :: date :: Nil = row.cells()
+        case (Purchase(UselessItem(_name, _price, _, _), _date, PretentiousPurveyor(_, _location), _quantity), row) =>
+          val name :: _ :: total :: _ :: location :: date :: _ :: Nil = row.cells()
           name.value() must beSome.which { case x: String => x.toLowerCase == _name }
-          price.value() must_== Some(_price)
+          total.value() must_== Some(_price * _quantity)
           location.value() must_== Some(_location)
           date.value() must_== _date.map(_.toDate)
           _date match {
@@ -87,7 +89,7 @@ class ExcelSpec extends Specification {
 
       val header2 :: rows2 = sheet2.rows()
       Purchases.*.zip(rows2).foreach {
-        case (Purchase(UselessItem(_name, _, tags), _, _), row) =>
+        case (Purchase(UselessItem(_name, _, tags, _), _, _, _), row) =>
           val name :: tag_foo :: tag_bar :: tag_baz :: tag_quux :: Nil = row.cells()
           name.value() must beSome.which { case x: String => x.toLowerCase == _name }
           tag_foo.value().filterNot(_ == "") must_== tags.get("foo")

@@ -24,12 +24,20 @@ class CSV extends Format {
     def apply(value: Option[String]) = quote(value) :: Nil
   }
 
-  class DateTimeFormatter(df: => org.joda.time.format.DateTimeFormatter) extends SimpleFormatter[DateTime] {
-    def apply(value: Option[DateTime]) = StringFormatter.quote(value.map(df.print)) :: Nil
+  implicit object BooleanFormatter extends SimpleFormatter[Boolean] {
+    def apply(value: Option[Boolean]) = value.map(_.toString).getOrElse("") :: Nil
+  }
+
+  implicit object IntFormatter extends SimpleFormatter[Int] {
+    def apply(value: Option[Int]) = value.map(_.toString).getOrElse("") :: Nil
   }
 
   class DoubleFormatter(df: => java.text.DecimalFormat) extends SimpleFormatter[Double] {
     def apply(value: Option[Double]) = StringFormatter.scrub(value.map(df.format)).getOrElse("") :: Nil
+  }
+
+  class DateTimeFormatter(df: => org.joda.time.format.DateTimeFormatter) extends SimpleFormatter[DateTime] {
+    def apply(value: Option[DateTime]) = StringFormatter.quote(value.map(df.print)) :: Nil
   }
 
   type Row = String

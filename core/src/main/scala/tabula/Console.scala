@@ -52,6 +52,14 @@ abstract class Console(minWidth: Int = 15) extends Format {
     def apply(value: Option[String]) = value :: Nil
   }
 
+  implicit object BooleanFormatter extends SimpleFormatter[Boolean] {
+    def apply(value: Option[Boolean]) = value.map(_.toString) :: Nil
+  }
+
+  implicit object IntFormatter extends SimpleFormatter[Int] {
+    def apply(value: Option[Int]) = value.map(_.toString) :: Nil
+  }
+
   implicit object DoubleFormatter extends SimpleFormatter[Double] {
     def apply(value: Option[Double]) = value.map(_.toString) :: Nil
   }

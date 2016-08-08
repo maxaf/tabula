@@ -11,16 +11,16 @@ import org.apache.commons.lang3.RandomStringUtils.randomAscii
 
 // a pretend data model
 
-case class UselessItem(name: String, price: Double, tags: Map[String, String] = Map.empty)
+case class UselessItem(name: String, price: Double, tags: Map[String, String] = Map.empty, utterlyUseless: Boolean)
 case class PretentiousPurveyor(name: String, location: String)
-case class Purchase(item: UselessItem, date: Option[DateTime], from: PretentiousPurveyor)
+case class Purchase(item: UselessItem, date: Option[DateTime], from: PretentiousPurveyor, quantity: Int)
 
 // some test data
 
 object Items {
-  val justSomeCoatRack = UselessItem("honest abe", 90.39, tags = Map("foo" -> randomAscii(10)))
-  val cheeseParkingSpot = UselessItem("fancy cheese board", 39.95, tags = Map("foo" -> randomAscii(10), "bar" -> randomAscii(10)))
-  val whatIsThis = UselessItem("faux professional tool pouch", 48.00, tags = Map("foo" -> randomAscii(10), "quux" -> randomAscii(10)))
+  val justSomeCoatRack = UselessItem("honest abe", 90.39, tags = Map("foo" -> randomAscii(10)), utterlyUseless = false)
+  val cheeseParkingSpot = UselessItem("fancy cheese board", 39.95, tags = Map("foo" -> randomAscii(10), "bar" -> randomAscii(10)), utterlyUseless = true)
+  val whatIsThis = UselessItem("faux professional tool pouch", 48.00, tags = Map("foo" -> randomAscii(10), "quux" -> randomAscii(10)), utterlyUseless = false)
 }
 
 object PlacesNormalPeopleDoNotGo {
@@ -34,9 +34,9 @@ object Purchases {
   import PlacesNormalPeopleDoNotGo._
 
   val * = {
-    Purchase(item = justSomeCoatRack, date = Some(DateTime.now), from = SchizophrenicMonkey) ::
-      Purchase(item = cheeseParkingSpot, date = None, from = BrooklynSlateWtf) ::
-      Purchase(item = whatIsThis, date = Some(DateTime.now), from = HeritageInsanityCo) ::
+    Purchase(item = justSomeCoatRack, date = Some(DateTime.now), from = SchizophrenicMonkey, quantity = 1) ::
+      Purchase(item = cheeseParkingSpot, date = None, from = BrooklynSlateWtf, quantity = 3) ::
+      Purchase(item = whatIsThis, date = Some(DateTime.now), from = HeritageInsanityCo, quantity = 5) ::
       Nil
   }
 }
@@ -47,13 +47,19 @@ object Purchases {
 object ItemName extends Column((_: Purchase).item.name)
 
 // how much we paid
-object ItemPrice extends Column((_: Purchase).item.price)
+object Total extends Column((p: Purchase) => p.item.price * p.quantity)
+
+// how many did we buy?
+object Quantity extends Column((_: Purchase).quantity)
 
 // where we bought it
 object PurchaseLocation extends Column((_: Purchase).from.location)
 
 // date of purchase
 object DateOfPurchase extends Column((_: Purchase).date)
+
+// was it utterly & completely useles?
+object Useless extends Column((_: Purchase).item.utterlyUseless)
 
 // tags
 case class Tag(name: String) extends Column((_: Purchase).item.tags.get(name))
@@ -66,8 +72,6 @@ object Tags extends ListColumn(
 
 // transformer column: capitalize words
 object Capitalize extends Column(capitalize)
-
-// object TotalPaid extends Fold(ItemPrice)(0)(_ + _)
 
 // unlimited extensibility via type classes!
 object Extensibility {
@@ -98,9 +102,11 @@ object ShowcaseSpec {
   object columns extends Columns(
     (ItemName | Capitalize) @@ "Item Name" ::
       Title ::
-      ItemPrice @@ "Item Price" ::
+      Total @@ "Purchase Total ($)" ::
+      Quantity @@ "Number of items bought" ::
       PurchaseLocation @@ "Bought At" ::
       DateOfPurchase @@ "Date of Purchase" ::
+      Useless @@ "Was it useless?" ::
       Tags ::
       HNil
   )

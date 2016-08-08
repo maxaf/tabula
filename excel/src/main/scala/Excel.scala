@@ -38,6 +38,14 @@ case class StringCell(value: String) extends ICell {
   def apply(ctx: ExcelContext, row: ExcelRow, idx: Int) = createCellAnd(ctx, row, idx)(_.setCellValue(value))
 }
 
+case class BooleanCell(value: Boolean) extends ICell {
+  def apply(ctx: ExcelContext, row: ExcelRow, idx: Int) = createCellAnd(ctx, row, idx)(_.setCellValue(value))
+}
+
+case class IntCell(value: Int) extends ICell {
+  def apply(ctx: ExcelContext, row: ExcelRow, idx: Int) = createCellAnd(ctx, row, idx)(_.setCellValue(value))
+}
+
 case class DateTimeCell(value: DateTime) extends ICell {
   def apply(ctx: ExcelContext, row: ExcelRow, idx: Int) =
     createCellAnd(ctx, row, idx) {
@@ -67,6 +75,14 @@ abstract class Excel extends Format {
 
   implicit object StringFormatter extends SimpleFormatter[String] {
     def apply(value: Option[String]) = value.map(StringCell(_)).getOrElse(NilCell) :: Nil
+  }
+
+  implicit object BooleanFormatter extends SimpleFormatter[Boolean] {
+    def apply(value: Option[Boolean]) = value.map(BooleanCell(_)).getOrElse(NilCell) :: Nil
+  }
+
+  implicit object IntFormatter extends SimpleFormatter[Int] {
+    def apply(value: Option[Int]) = value.map(IntCell(_)).getOrElse(NilCell) :: Nil
   }
 
   implicit object DateTimeFormatter extends SimpleFormatter[DateTime] {

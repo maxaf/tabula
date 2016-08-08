@@ -16,6 +16,16 @@ trait JSON extends Format {
     def apply(value: Option[String]) = JString(value.getOrElse("")) :: Nil
   }
 
+  implicit object BooleanFormatter extends Formatter[Boolean] {
+    type Local = JBool
+    def apply(value: Option[Boolean]) = value.map(JBool(_)).getOrElse(JBool(false)) :: Nil
+  }
+
+  implicit object IntFormatter extends Formatter[Int] {
+    type Local = JInt
+    def apply(value: Option[Int]) = value.map(JInt(_)).getOrElse(JInt(0)) :: Nil
+  }
+
   implicit object DateTimeFormatter extends Formatter[DateTime] {
     type Local = JInt
     def apply(value: Option[DateTime]) = value.map(dt => JInt(dt.getMillis)).getOrElse(JInt(0)) :: Nil
