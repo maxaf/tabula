@@ -7,12 +7,12 @@ object Versions {
   val ScalaVersion211 = "2.11.8"
   val JodaTimeVersion = "2.9.4"
   val JodaConvertVersion = "1.8.1"
-  val ShapelessVersion = "2.3.1"
+  val ShapelessVersion = "2.3.2"
   val PoiVersion = "3.14"
   val Json4sVersion = "3.4.0"
   val CommonsLangVersion = "3.4"
   val SpecsVersion = "3.8.4"
-  val CatsVersion = "0.6.1"
+  val CatsVersion = "0.7.0"
 }
 
 object BuildSettings {
