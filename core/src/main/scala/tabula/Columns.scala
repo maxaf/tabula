@@ -14,5 +14,7 @@ abstract class Columns[F, T, C, Tail <: HList, O <: HList](val columns: Column[F
     implicit
     lf: LeftFolder[ColumnAndCell[F, T, C] :: O, fmt.Row, fmt.type]
   ) =
-    f(fmt.writer(columns)).write(xs.map(cellsF(_).row(fmt)))
+    writer(fmt)(f).write(xs.map(cellsF(_).row(fmt)))
+  def writer[Fmt <: Format](fmt: Fmt)(f: fmt.Factory => fmt.Writer) =
+    f(fmt.writer(columns))
 }
