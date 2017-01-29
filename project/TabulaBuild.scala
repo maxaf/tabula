@@ -5,14 +5,14 @@ import scalariform.formatter.preferences._
 
 object Versions {
   val ScalaVersion211 = "2.11.8"
-  val JodaTimeVersion = "2.9.4"
+  val JodaTimeVersion = "2.9.7"
   val JodaConvertVersion = "1.8.1"
   val ShapelessVersion = "2.3.2"
   val PoiVersion = "3.14"
-  val Json4sVersion = "3.4.0"
-  val CommonsLangVersion = "3.4"
-  val SpecsVersion = "3.8.4"
-  val CatsVersion = "0.7.0"
+  val Json4sVersion = "3.5.0"
+  val CommonsLangVersion = "3.5"
+  val SpecsVersion = "3.8.7"
+  val CatsVersion = "0.8.1"
 }
 
 object BuildSettings {
@@ -23,7 +23,7 @@ object BuildSettings {
 
   lazy val buildSettings = Defaults.defaultSettings ++ Seq(
     organization := "com.bumnetworks",
-    version := "0.1.3-SNAPSHOT",
+    version := "0.1.3",
     scalaVersion := ScalaVersion211,
     scalacOptions ++= Seq("-deprecation",  "-unchecked", "-feature", "-language:implicitConversions", "-language:reflectiveCalls"),
     shellPrompt := prompt,
@@ -85,19 +85,10 @@ object Deps {
   val commons_lang = "org.apache.commons" % "commons-lang3" % CommonsLangVersion % "test"
   val poi = "org.apache.poi" % "poi" % PoiVersion % "provided"
   val json4s = "org.json4s" %% "json4s-native" % Json4sVersion % "provided"
-  val Shapeless = {
-    val shapeless211 = "com.chuusai" %% "shapeless" % ShapelessVersion % "provided"
-    val shapeless210 = "com.chuusai" % "shapeless" % ShapelessVersion % "provided" cross CrossVersion.full
-    Seq(
-      libraryDependencies <++= (scalaVersion) {
-        sv =>
-        Seq(if (sv.startsWith("2.10")) shapeless210 else shapeless211)
-      }
-    )
-  }
+  val shapeless = "com.chuusai" %% "shapeless" % ShapelessVersion % "provided"
   val Reflection = Seq(libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value)
 
-  val CoreDeps = Seq(cats, joda_time, joda_convert, commons_lang)
+  val CoreDeps = Seq(cats, joda_time, joda_convert, commons_lang, shapeless)
   val JsonDeps = Seq(json4s)
   val ExcelDeps = Seq(poi)
 }
@@ -113,16 +104,16 @@ object TabulaBuild extends Build {
 
   lazy val core = Project(
     id = "tabula-core", base = file("core"),
-    settings = buildSettings ++ publishSettings ++ Seq(libraryDependencies ++= CoreDeps) ++ Shapeless ++ Reflection
+    settings = buildSettings ++ publishSettings ++ Seq(libraryDependencies ++= CoreDeps) ++ Reflection
   )
 
   lazy val json = Project(
     id = "tabula-json", base = file("json"),
-    settings = buildSettings ++ publishSettings ++ Seq(libraryDependencies ++= CoreDeps ++ JsonDeps) ++ Shapeless
+    settings = buildSettings ++ publishSettings ++ Seq(libraryDependencies ++= CoreDeps ++ JsonDeps)
   ) dependsOn(core % "compile->test")
 
   lazy val excel = Project(
     id = "tabula-excel", base = file("excel"),
-    settings = buildSettings ++ publishSettings ++ Seq(libraryDependencies ++= CoreDeps ++ ExcelDeps) ++ Shapeless
+    settings = buildSettings ++ publishSettings ++ Seq(libraryDependencies ++= CoreDeps ++ ExcelDeps)
   ) dependsOn(core % "compile->test")
 }
