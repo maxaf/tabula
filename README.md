@@ -52,13 +52,13 @@ conventional Maven repositories. To use this code, add the following resolver
 to your SBT configuration:
 
 ```scala
-resolvers += "maxaf-snapshots" at s"https://repo.bumnetworks.com/snapshots/"
+resolvers += "maxaf-releases" at s"https://repo.bumnetworks.com/releases/"
 ```
 
 Next, ask SBT to include Tabula's dependencies in your project's classpath:
 
 ```scala
-libraryDependencies += "com.bumnetworks" %% "tabula-core" % "0.1.2-SNAPSHOT"
+libraryDependencies += "com.bumnetworks" %% "tabula-core" % "0.1.3"
 ```
 
 Now it's time to add the imports:
@@ -231,7 +231,7 @@ Lo and behold:
 Include the JSON module in your project's classpath as follows:
 
 ```scala
-libraryDependencies += "com.bumnetworks" %% "tabula-json" % "0.1.2-SNAPSHOT"
+libraryDependencies += "com.bumnetworks" %% "tabula-json" % "0.1.3"
 ```
 
 Next, define a JSON formatter. It comes with batteries included, no need to
@@ -254,7 +254,7 @@ And the output will be:
 Include the Excel module in your project's classpath as follows:
 
 ```scala
-libraryDependencies += "com.bumnetworks" %% "tabula-excel" % "0.1.2-SNAPSHOT"
+libraryDependencies += "com.bumnetworks" %% "tabula-excel" % "0.1.3"
 ```
 
 Next, define a Excel formatter. It comes with batteries included, no need to
