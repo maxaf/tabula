@@ -4,7 +4,8 @@ import org.apache.poi.ss.usermodel.{Workbook, Sheet}
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import scala.collection.mutable.ArrayBuffer
 
-class MockWorkbook(underlying: Workbook)(implicit me: MockExcel) extends Workbook {
+class MockWorkbook(underlying: Workbook)(implicit me: MockExcel)
+    extends Workbook {
   me.register(this)
 
   private val _sheets = ArrayBuffer.empty[MockSheet]
@@ -26,8 +27,10 @@ class MockWorkbook(underlying: Workbook)(implicit me: MockExcel) extends Workboo
 
   // things we proxy from underlying because they're difficult (or
   // impossible) to mock
-  def createCellStyle(): org.apache.poi.ss.usermodel.CellStyle = underlying.createCellStyle()
-  def createDataFormat(): org.apache.poi.ss.usermodel.DataFormat = underlying.createDataFormat()
+  def createCellStyle(): org.apache.poi.ss.usermodel.CellStyle =
+    underlying.createCellStyle()
+  def createDataFormat(): org.apache.poi.ss.usermodel.DataFormat =
+    underlying.createDataFormat()
 
   // things that can error out harmlessly
   def addPicture(x$1: Array[Byte], x$2: Int): Int = ???
@@ -35,15 +38,24 @@ class MockWorkbook(underlying: Workbook)(implicit me: MockExcel) extends Workboo
   def cloneSheet(x$1: Int): org.apache.poi.ss.usermodel.Sheet = ???
   def createFont(): org.apache.poi.ss.usermodel.Font = ???
   def createName(): org.apache.poi.ss.usermodel.Name = ???
-  def findFont(x$1: Short, x$2: Short, x$3: Short, x$4: String, x$5: Boolean, x$6: Boolean, x$7: Short, x$8: Byte): org.apache.poi.ss.usermodel.Font = ???
+  def findFont(x$1: Short,
+               x$2: Short,
+               x$3: Short,
+               x$4: String,
+               x$5: Boolean,
+               x$6: Boolean,
+               x$7: Short,
+               x$8: Byte): org.apache.poi.ss.usermodel.Font = ???
   def getActiveSheetIndex(): Int = ???
-  def getAllPictures(): java.util.List[_ <: org.apache.poi.ss.usermodel.PictureData] = ???
+  def getAllPictures()
+    : java.util.List[_ <: org.apache.poi.ss.usermodel.PictureData] = ???
   def getCellStyleAt(x$1: Short): org.apache.poi.ss.usermodel.CellStyle = ???
   def getCreationHelper(): org.apache.poi.ss.usermodel.CreationHelper = ???
   def getFirstVisibleTab(): Int = ???
   def getFontAt(x$1: Short): org.apache.poi.ss.usermodel.Font = ???
   def getForceFormulaRecalculation(): Boolean = ???
-  def getMissingCellPolicy(): org.apache.poi.ss.usermodel.Row.MissingCellPolicy = ???
+  def getMissingCellPolicy()
+    : org.apache.poi.ss.usermodel.Row.MissingCellPolicy = ???
   def getName(x$1: String): org.apache.poi.ss.usermodel.Name = ???
   def getNameAt(x$1: Int): org.apache.poi.ss.usermodel.Name = ???
   def getNameIndex(x$1: String): Int = ???
@@ -68,18 +80,27 @@ class MockWorkbook(underlying: Workbook)(implicit me: MockExcel) extends Workboo
   def setFirstVisibleTab(x$1: Int): Unit = ???
   def setForceFormulaRecalculation(x$1: Boolean): Unit = ???
   def setHidden(x$1: Boolean): Unit = ???
-  def setMissingCellPolicy(x$1: org.apache.poi.ss.usermodel.Row.MissingCellPolicy): Unit = ???
-  def setPrintArea(x$1: Int, x$2: Int, x$3: Int, x$4: Int, x$5: Int): Unit = ???
+  def setMissingCellPolicy(
+      x$1: org.apache.poi.ss.usermodel.Row.MissingCellPolicy): Unit = ???
+  def setPrintArea(x$1: Int, x$2: Int, x$3: Int, x$4: Int, x$5: Int): Unit =
+    ???
   def setPrintArea(x$1: Int, x$2: String): Unit = ???
-  def setRepeatingRowsAndColumns(x$1: Int, x$2: Int, x$3: Int, x$4: Int, x$5: Int): Unit = ???
+  def setRepeatingRowsAndColumns(x$1: Int,
+                                 x$2: Int,
+                                 x$3: Int,
+                                 x$4: Int,
+                                 x$5: Int): Unit = ???
   def setSelectedTab(x$1: Int): Unit = ???
   def setSheetHidden(x$1: Int, x$2: Int): Unit = ???
   def setSheetHidden(x$1: Int, x$2: Boolean): Unit = ???
   def setSheetName(x$1: Int, x$2: String): Unit = ???
   def setSheetOrder(x$1: String, x$2: Int): Unit = ???
   def close(): Unit = ???
-  def linkExternalWorkbook(x$1: String, x$2: org.apache.poi.ss.usermodel.Workbook): Int = ???
-  def sheetIterator(): java.util.Iterator[org.apache.poi.ss.usermodel.Sheet] = ???
+  def linkExternalWorkbook(x$1: String,
+                           x$2: org.apache.poi.ss.usermodel.Workbook): Int =
+    ???
+  def sheetIterator(): java.util.Iterator[org.apache.poi.ss.usermodel.Sheet] =
+    ???
   def iterator(): java.util.Iterator[org.apache.poi.ss.usermodel.Sheet] = ???
   def getCellStyleAt(x$1: Int): org.apache.poi.ss.usermodel.CellStyle = ???
   def getSpreadsheetVersion(): org.apache.poi.ss.SpreadsheetVersion = ???

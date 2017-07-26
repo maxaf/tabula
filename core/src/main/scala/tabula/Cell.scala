@@ -4,8 +4,7 @@ package tabula
   * value of a table cell. Cell[A] serves as a lingua franca for all
   * Tabula components downstream of [[tabula.Column]].
   */
-trait Cell[A] {
-  cell =>
+trait Cell[A] { cell =>
 
   /** The table cell's value. Since all cell values are nullable, all
     * consumers must be able to handle missing values.

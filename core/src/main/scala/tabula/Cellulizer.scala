@@ -17,8 +17,7 @@ import cats.Monoid
   *
   * @param convert function for turning a `T` into a `C`
   */
-abstract class Cellulizer[T, C: Manifest](convert: T => C) {
-  cz =>
+abstract class Cellulizer[T, C: Manifest](convert: T => C) { cz =>
 
   /** Lazy implementation of a [[Cell]][C] that defers computation of
     * the `C` until a Tabula component requires it.
@@ -38,15 +37,17 @@ abstract class Cellulizer[T, C: Manifest](convert: T => C) {
   def apply(value: T): Cell[C] = new LazyCell(value, Some(_: T))
 
   /** Convert a potentially missing `T` into a [[Cell]][C]. */
-  def apply(value: Option[T]): Cell[C] = new LazyCell(value, identity: Option[T] => Option[T])
+  def apply(value: Option[T]): Cell[C] =
+    new LazyCell(value, identity: Option[T] => Option[T])
 }
 
 /** Derived [[Cellulizer]] that supports [[ListColumn]] as a means of
   * producing [[Cell]][List[C]] cells.
   */
-class ListCellulizer[F, T, C: Manifest](implicit mc: Monoid[C]) extends Cellulizer[List[ColumnAndCell[F, T, C]], List[C]](
-  cacs => cacs.map(cac => cac._2.value.getOrElse(mc.empty))
-)
+class ListCellulizer[F, T, C: Manifest](implicit mc: Monoid[C])
+    extends Cellulizer[List[ColumnAndCell[F, T, C]], List[C]](
+      cacs => cacs.map(cac => cac._2.value.getOrElse(mc.empty))
+    )
 
 /** Cellulizer starter kit. Contains [[Cellulizer]]s for enabling
   * commonly used conversions, making Tabula immediately useful in an
@@ -54,36 +55,48 @@ class ListCellulizer[F, T, C: Manifest](implicit mc: Monoid[C]) extends Celluliz
   * extensions.
   */
 trait Cellulizers {
+
   /** Cellulizers for primitive types that Tabula understands natively. */
-  implicit object StringIdCellulizer extends Cellulizer[String, String](identity)
-  implicit object BooleanIdCellulizer extends Cellulizer[Boolean, Boolean](identity)
+  implicit object StringIdCellulizer
+      extends Cellulizer[String, String](identity)
+  implicit object BooleanIdCellulizer
+      extends Cellulizer[Boolean, Boolean](identity)
   implicit object IntDoubleCellulizer extends Cellulizer[Int, Int](identity)
-  implicit object DoubleDoubleCellulizer extends Cellulizer[Double, Double](identity)
-  implicit object DateTimeDateTimeCellulizer extends Cellulizer[DateTime, DateTime](identity)
+  implicit object DoubleDoubleCellulizer
+      extends Cellulizer[Double, Double](identity)
+  implicit object DateTimeDateTimeCellulizer
+      extends Cellulizer[DateTime, DateTime](identity)
 
   /** Cellulizer for `T =:= scala.math.BigDecimal` and `C =:= Double` case. */
-  implicit object ScalaBigDecimalDoubleCellulizer extends Cellulizer[ScalaBigDecimal, Double](_.doubleValue)
+  implicit object ScalaBigDecimalDoubleCellulizer
+      extends Cellulizer[ScalaBigDecimal, Double](_.doubleValue)
 
   /** Cellulizer for `T =:= java.math.BigDecimal` and `C =:= Double` case. */
-  implicit object JavaBigDecimalDoubleCellulizer extends Cellulizer[JavaBigDecimal, Double](_.doubleValue)
+  implicit object JavaBigDecimalDoubleCellulizer
+      extends Cellulizer[JavaBigDecimal, Double](_.doubleValue)
 
   /** Cellulizer for `T =:= Long` and `C =:= Double` case. */
-  implicit object LongDoubleCellulizer extends Cellulizer[Long, Double](_.doubleValue)
+  implicit object LongDoubleCellulizer
+      extends Cellulizer[Long, Double](_.doubleValue)
 
   /** Cellulizer for `T =:= Float` and `C =:= Double` case. */
-  implicit object FloatDoubleCellulizer extends Cellulizer[Float, Double](_.doubleValue)
+  implicit object FloatDoubleCellulizer
+      extends Cellulizer[Float, Double](_.doubleValue)
 
   /** Perform ad-hoc short-circuit conversion of some `F` directly to
     * `C`, bypassing the intermediate `T` stage. Supported by
     * implicitly injected [[Cellulizer]][F, C].
     */
-  def cellulize[F, C](value: F)(implicit cz: Cellulizer[F, C]): Cell[C] = cz(value)
+  def cellulize[F, C](value: F)(implicit cz: Cellulizer[F, C]): Cell[C] =
+    cz(value)
 
   /** Perform ad-hoc short-circuit conversion of a potentially missing
     * `F` directly to `C`, bypassing the intermediate `T`
     * stage. Supported by implicitly injected [[Cellulizer]][F, C].
     */
-  def cellulize[F, C](value: Option[F])(implicit cz: Cellulizer[F, C]): Cell[C] = cz(value)
+  def cellulize[F, C](value: Option[F])(
+      implicit cz: Cellulizer[F, C]): Cell[C] = cz(value)
 
-  implicit def lcz[F, T, C: Manifest](implicit mc: Monoid[C]) = new ListCellulizer[F, T, C]
+  implicit def lcz[F, T, C: Manifest](implicit mc: Monoid[C]) =
+    new ListCellulizer[F, T, C]
 }

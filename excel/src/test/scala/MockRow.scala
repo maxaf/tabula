@@ -16,9 +16,11 @@ class MockRow(underlying: Row) extends Row {
   // Members declared in java.lang.Iterable
   def iterator(): java.util.Iterator[org.apache.poi.ss.usermodel.Cell] = ???
   // Members declared in org.apache.poi.ss.usermodel.Row
-  def cellIterator(): java.util.Iterator[org.apache.poi.ss.usermodel.Cell] = ???
+  def cellIterator(): java.util.Iterator[org.apache.poi.ss.usermodel.Cell] =
+    ???
   def createCell(x$1: Int, x$2: Int): org.apache.poi.ss.usermodel.Cell = ???
-  def getCell(x$1: Int, x$2: org.apache.poi.ss.usermodel.Row.MissingCellPolicy): org.apache.poi.ss.usermodel.Cell = ???
+  def getCell(x$1: Int, x$2: org.apache.poi.ss.usermodel.Row.MissingCellPolicy)
+    : org.apache.poi.ss.usermodel.Cell = ???
   def getCell(x$1: Int): org.apache.poi.ss.usermodel.Cell = ???
   def getFirstCellNum(): Short = ???
   def getHeight(): Short = ???

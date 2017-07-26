@@ -9,8 +9,7 @@ class CSV extends Format {
 
   implicit object StringFormatter extends SimpleFormatter[String] {
     def scrub(x: Option[String]) = {
-      x
-        .flatMap(Option(_))
+      x.flatMap(Option(_))
         .map(_.trim)
         .filterNot(_ == "")
     }
@@ -25,45 +24,55 @@ class CSV extends Format {
   }
 
   implicit object BooleanFormatter extends SimpleFormatter[Boolean] {
-    def apply(value: Option[Boolean]) = value.map(_.toString).getOrElse("") :: Nil
+    def apply(value: Option[Boolean]) =
+      value.map(_.toString).getOrElse("") :: Nil
   }
 
   implicit object IntFormatter extends SimpleFormatter[Int] {
     def apply(value: Option[Int]) = value.map(_.toString).getOrElse("") :: Nil
   }
 
-  class DoubleFormatter(df: => java.text.DecimalFormat) extends SimpleFormatter[Double] {
-    def apply(value: Option[Double]) = StringFormatter.scrub(value.map(df.format)).getOrElse("") :: Nil
+  class DoubleFormatter(df: => java.text.DecimalFormat)
+      extends SimpleFormatter[Double] {
+    def apply(value: Option[Double]) =
+      StringFormatter.scrub(value.map(df.format)).getOrElse("") :: Nil
   }
 
-  class DateTimeFormatter(df: => org.joda.time.format.DateTimeFormatter) extends SimpleFormatter[DateTime] {
-    def apply(value: Option[DateTime]) = StringFormatter.quote(value.map(df.print)) :: Nil
+  class DateTimeFormatter(df: => org.joda.time.format.DateTimeFormatter)
+      extends SimpleFormatter[DateTime] {
+    def apply(value: Option[DateTime]) =
+      StringFormatter.quote(value.map(df.print)) :: Nil
   }
 
   type Row = String
 
   object RowProto extends RowProto {
     def emptyRow = ""
-    def appendCell[C](cell: Cell[C])(row: String)(implicit fter: Formatter[C]) =
+    def appendCell[C](cell: Cell[C])(row: String)(
+        implicit fter: Formatter[C]) =
       fter(cell).foldLeft(row)((acc, elem) => appendBase(elem)(acc))
     def appendBase[T <: Base](value: T)(row: Row) =
       if (row == emptyRow) value
-      else row+","+value
+      else row + "," + value
   }
 
-  class DefaultDateTimeFormatter extends DateTimeFormatter(org.joda.time.format.DateTimeFormat.fullDateTime)
+  class DefaultDateTimeFormatter
+      extends DateTimeFormatter(
+        org.joda.time.format.DateTimeFormat.fullDateTime)
 
-  class SimpleDoubleFormatter(precision: Int = 2) extends DoubleFormatter({
-    require(precision >= 0)
-    val decimal = "0" * precision
-    new java.text.DecimalFormat(s"#,##0.${decimal};-#,##0.${decimal}")
-  })
+  class SimpleDoubleFormatter(precision: Int = 2)
+      extends DoubleFormatter({
+        require(precision >= 0)
+        val decimal = "0" * precision
+        new java.text.DecimalFormat(s"#,##0.${decimal};-#,##0.${decimal}")
+      })
   class DefaultDoubleFormatter extends SimpleDoubleFormatter
 
   class Factory(names: List[Option[String]]) extends WriterFactory(names) {
     def toStream(out: OutputStream) = new Writer {
       lazy val pw = new PrintWriter(out)
-      override def start() = pw.println(names.map(StringFormatter.quote).mkString(","))
+      override def start() =
+        pw.println(names.map(StringFormatter.quote).mkString(","))
       def writeMore(rows: Iterator[String]) = for (row <- rows) pw.println(row)
       override def finish() = pw.flush()
     }

@@ -17,19 +17,23 @@ class MockSheet(underlying: Sheet) extends Sheet {
   def iterator(): java.util.Iterator[org.apache.poi.ss.usermodel.Row] = ???
   // Members declared in org.apache.poi.ss.usermodel.Sheet
   def addMergedRegion(x$1: org.apache.poi.ss.util.CellRangeAddress): Int = ???
-  def addValidationData(x$1: org.apache.poi.ss.usermodel.DataValidation): Unit = ???
+  def addValidationData(
+      x$1: org.apache.poi.ss.usermodel.DataValidation): Unit = ???
   def autoSizeColumn(x$1: Int, x$2: Boolean): Unit = ???
   def autoSizeColumn(x$1: Int): Unit = ???
   def createDrawingPatriarch(): org.apache.poi.ss.usermodel.Drawing = ???
   def createFreezePane(x$1: Int, x$2: Int): Unit = ???
   def createFreezePane(x$1: Int, x$2: Int, x$3: Int, x$4: Int): Unit = ???
-  def createSplitPane(x$1: Int, x$2: Int, x$3: Int, x$4: Int, x$5: Int): Unit = ???
+  def createSplitPane(x$1: Int, x$2: Int, x$3: Int, x$4: Int, x$5: Int): Unit =
+    ???
   def getAutobreaks(): Boolean = ???
-  def getCellComment(x$1: Int, x$2: Int): org.apache.poi.ss.usermodel.Comment = ???
+  def getCellComment(x$1: Int, x$2: Int): org.apache.poi.ss.usermodel.Comment =
+    ???
   def getColumnBreaks(): Array[Int] = ???
   def getColumnStyle(x$1: Int): org.apache.poi.ss.usermodel.CellStyle = ???
   def getColumnWidth(x$1: Int): Int = ???
-  def getDataValidationHelper(): org.apache.poi.ss.usermodel.DataValidationHelper = ???
+  def getDataValidationHelper()
+    : org.apache.poi.ss.usermodel.DataValidationHelper = ???
   def getDefaultColumnWidth(): Int = ???
   def getDefaultRowHeight(): Short = ???
   def getDefaultRowHeightInPoints(): Float = ???
@@ -56,7 +60,8 @@ class MockSheet(underlying: Sheet) extends Sheet {
   def getRowSumsBelow(): Boolean = ???
   def getRowSumsRight(): Boolean = ???
   def getScenarioProtect(): Boolean = ???
-  def getSheetConditionalFormatting(): org.apache.poi.ss.usermodel.SheetConditionalFormatting = ???
+  def getSheetConditionalFormatting()
+    : org.apache.poi.ss.usermodel.SheetConditionalFormatting = ???
   def getSheetName(): String = ???
   def getTopRow(): Short = ???
   def getVerticallyCenter(): Boolean = ???
@@ -74,20 +79,28 @@ class MockSheet(underlying: Sheet) extends Sheet {
   def isRowBroken(x$1: Int): Boolean = ???
   def isSelected(): Boolean = ???
   def protectSheet(x$1: String): Unit = ???
-  def removeArrayFormula(x$1: org.apache.poi.ss.usermodel.Cell): org.apache.poi.ss.usermodel.CellRange[_ <: org.apache.poi.ss.usermodel.Cell] = ???
+  def removeArrayFormula(x$1: org.apache.poi.ss.usermodel.Cell)
+    : org.apache.poi.ss.usermodel.CellRange[
+      _ <: org.apache.poi.ss.usermodel.Cell] = ???
   def removeColumnBreak(x$1: Int): Unit = ???
   def removeMergedRegion(x$1: Int): Unit = ???
   def removeRow(x$1: org.apache.poi.ss.usermodel.Row): Unit = ???
   def removeRowBreak(x$1: Int): Unit = ???
   def rowIterator(): java.util.Iterator[org.apache.poi.ss.usermodel.Row] = ???
-  def setArrayFormula(x$1: String, x$2: org.apache.poi.ss.util.CellRangeAddress): org.apache.poi.ss.usermodel.CellRange[_ <: org.apache.poi.ss.usermodel.Cell] = ???
-  def setAutoFilter(x$1: org.apache.poi.ss.util.CellRangeAddress): org.apache.poi.ss.usermodel.AutoFilter = ???
+  def setArrayFormula(x$1: String,
+                      x$2: org.apache.poi.ss.util.CellRangeAddress)
+    : org.apache.poi.ss.usermodel.CellRange[
+      _ <: org.apache.poi.ss.usermodel.Cell] = ???
+  def setAutoFilter(x$1: org.apache.poi.ss.util.CellRangeAddress)
+    : org.apache.poi.ss.usermodel.AutoFilter = ???
   def setAutobreaks(x$1: Boolean): Unit = ???
   def setColumnBreak(x$1: Int): Unit = ???
   def setColumnGroupCollapsed(x$1: Int, x$2: Boolean): Unit = ???
   def setColumnHidden(x$1: Int, x$2: Boolean): Unit = ???
   def setColumnWidth(x$1: Int, x$2: Int): Unit = ???
-  def setDefaultColumnStyle(x$1: Int, x$2: org.apache.poi.ss.usermodel.CellStyle): Unit = ???
+  def setDefaultColumnStyle(x$1: Int,
+                            x$2: org.apache.poi.ss.usermodel.CellStyle): Unit =
+    ???
   def setDefaultColumnWidth(x$1: Int): Unit = ???
   def setDefaultRowHeight(x$1: Short): Unit = ???
   def setDefaultRowHeightInPoints(x$1: Float): Unit = ???
@@ -101,8 +114,10 @@ class MockSheet(underlying: Sheet) extends Sheet {
   def setHorizontallyCenter(x$1: Boolean): Unit = ???
   def setMargin(x$1: Short, x$2: Double): Unit = ???
   def setPrintGridlines(x$1: Boolean): Unit = ???
-  def setRepeatingColumns(x$1: org.apache.poi.ss.util.CellRangeAddress): Unit = ???
-  def setRepeatingRows(x$1: org.apache.poi.ss.util.CellRangeAddress): Unit = ???
+  def setRepeatingColumns(x$1: org.apache.poi.ss.util.CellRangeAddress): Unit =
+    ???
+  def setRepeatingRows(x$1: org.apache.poi.ss.util.CellRangeAddress): Unit =
+    ???
   def setRightToLeft(x$1: Boolean): Unit = ???
   def setRowBreak(x$1: Int): Unit = ???
   def setRowGroupCollapsed(x$1: Int, x$2: Boolean): Unit = ???
@@ -111,22 +126,33 @@ class MockSheet(underlying: Sheet) extends Sheet {
   def setSelected(x$1: Boolean): Unit = ???
   def setVerticallyCenter(x$1: Boolean): Unit = ???
   def setZoom(x$1: Int, x$2: Int): Unit = ???
-  def shiftRows(x$1: Int, x$2: Int, x$3: Int, x$4: Boolean, x$5: Boolean): Unit = ???
+  def shiftRows(x$1: Int,
+                x$2: Int,
+                x$3: Int,
+                x$4: Boolean,
+                x$5: Boolean): Unit = ???
   def shiftRows(x$1: Int, x$2: Int, x$3: Int): Unit = ???
   def showInPane(x$1: Short, x$2: Short): Unit = ???
   def ungroupColumn(x$1: Int, x$2: Int): Unit = ???
   def ungroupRow(x$1: Int, x$2: Int): Unit = ???
   def getColumnOutlineLevel(x$1: Int): Int = ???
   def getColumnWidthInPixels(x$1: Int): Float = ???
-  def getDataValidations(): java.util.List[_ <: org.apache.poi.ss.usermodel.DataValidation] = ???
-  def getMergedRegions(): java.util.List[org.apache.poi.ss.util.CellRangeAddress] = ???
+  def getDataValidations()
+    : java.util.List[_ <: org.apache.poi.ss.usermodel.DataValidation] = ???
+  def getMergedRegions()
+    : java.util.List[org.apache.poi.ss.util.CellRangeAddress] = ???
   def showInPane(x$1: Int, x$2: Int): Unit = ???
   def getActiveCell(): org.apache.poi.ss.util.CellAddress = ???
-  def getCellComment(x$1: org.apache.poi.ss.util.CellAddress): org.apache.poi.ss.usermodel.Comment = ???
-  def getCellComments(): java.util.Map[org.apache.poi.ss.util.CellAddress, _ <: org.apache.poi.ss.usermodel.Comment] = ???
+  def getCellComment(x$1: org.apache.poi.ss.util.CellAddress)
+    : org.apache.poi.ss.usermodel.Comment = ???
+  def getCellComments()
+    : java.util.Map[org.apache.poi.ss.util.CellAddress,
+                    _ <: org.apache.poi.ss.usermodel.Comment] = ???
   def getDrawingPatriarch(): org.apache.poi.ss.usermodel.Drawing = ???
-  def getHyperlink(x$1: Int, x$2: Int): org.apache.poi.ss.usermodel.Hyperlink = ???
-  def getHyperlinkList(): java.util.List[_ <: org.apache.poi.ss.usermodel.Hyperlink] = ???
+  def getHyperlink(x$1: Int, x$2: Int): org.apache.poi.ss.usermodel.Hyperlink =
+    ???
+  def getHyperlinkList()
+    : java.util.List[_ <: org.apache.poi.ss.usermodel.Hyperlink] = ???
   def setActiveCell(x$1: org.apache.poi.ss.util.CellAddress): Unit = ???
   def setZoom(x$1: Int): Unit = ???
 }

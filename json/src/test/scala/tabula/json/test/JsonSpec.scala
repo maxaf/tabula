@@ -12,7 +12,8 @@ import scala.xml._
 object MyJSON extends JSON {
   implicit object NodeSeqFormatter extends Formatter[NodeSeq] {
     type Local = JString
-    def apply(value: Option[NodeSeq]) = JString(value.map(_ \\ "title").map(_.toString).getOrElse("")) :: Nil
+    def apply(value: Option[NodeSeq]) =
+      JString(value.map(_ \\ "title").map(_.toString).getOrElse("")) :: Nil
   }
 }
 

@@ -16,17 +16,21 @@ abstract class Console(minWidth: Int = 15) extends Format {
   }
 
   class Factory(names: List[Option[String]]) extends WriterFactory(names) {
-    def padWidth[A](width: Int)(op: Int => A): A = op(if (width < minWidth) minWidth else width)
+    def padWidth[A](width: Int)(op: Int => A): A =
+      op(if (width < minWidth) minWidth else width)
     val widths = names.map(_.map(_.size).getOrElse(minWidth))
-    def padTo(width: Int, s: String) = ("%1$-"+width+"."+width+"s").format(s)
+    def padTo(width: Int, s: String) =
+      ("%1$-" + width + "." + width + "s").format(s)
     def padRow(ss: List[Option[String]]) = {
       widths
         .zip(ss)
-        .map { case (width, s) => padWidth(width)(w => padTo(w, s.getOrElse(""))) }
+        .map {
+          case (width, s) => padWidth(width)(w => padTo(w, s.getOrElse("")))
+        }
         .mkString("| ", " | ", " |")
     }
     val header = padRow(names)
-    val hr = "+"+("-" * (header.size - 2))+"+"
+    val hr = "+" + ("-" * (header.size - 2)) + "+"
 
     def toPrintWriter(printer: PrintWriter) = new Writer {
       override def start() {

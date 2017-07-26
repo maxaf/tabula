@@ -55,4 +55,3 @@ class NamerSpec extends Specification {
     }
   }
 }
-

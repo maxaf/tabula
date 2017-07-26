@@ -3,7 +3,13 @@ package tabula.excel
 import shapeless._
 import tabula._
 import Tabula._
-import org.apache.poi.ss.usermodel.{Workbook, Sheet, Row => ExcelRow, Cell => ExcelCell, CellStyle}
+import org.apache.poi.ss.usermodel.{
+  Workbook,
+  Sheet,
+  Row => ExcelRow,
+  Cell => ExcelCell,
+  CellStyle
+}
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.joda.time._
 import java.io.OutputStream
@@ -19,8 +25,10 @@ case class ExcelContext(workbook: Workbook) {
   }
 }
 
-sealed abstract class ICell extends ((ExcelContext, ExcelRow, Int) => ExcelCell) {
-  protected def createCellAnd(ctx: ExcelContext, row: ExcelRow, idx: Int)(f: ExcelCell => Unit) = {
+sealed abstract class ICell
+    extends ((ExcelContext, ExcelRow, Int) => ExcelCell) {
+  protected def createCellAnd(ctx: ExcelContext, row: ExcelRow, idx: Int)(
+      f: ExcelCell => Unit) = {
     val cell = row.createCell(idx)
     f(cell)
     cell
@@ -31,35 +39,40 @@ sealed abstract class ICell extends ((ExcelContext, ExcelRow, Int) => ExcelCell)
 }
 
 object NilCell extends ICell {
-  def apply(ctx: ExcelContext, row: ExcelRow, idx: Int) = createCell(ctx, row, idx)
+  def apply(ctx: ExcelContext, row: ExcelRow, idx: Int) =
+    createCell(ctx, row, idx)
 }
 
 case class StringCell(value: String) extends ICell {
-  def apply(ctx: ExcelContext, row: ExcelRow, idx: Int) = createCellAnd(ctx, row, idx)(_.setCellValue(value))
+  def apply(ctx: ExcelContext, row: ExcelRow, idx: Int) =
+    createCellAnd(ctx, row, idx)(_.setCellValue(value))
 }
 
 case class BooleanCell(value: Boolean) extends ICell {
-  def apply(ctx: ExcelContext, row: ExcelRow, idx: Int) = createCellAnd(ctx, row, idx)(_.setCellValue(value))
+  def apply(ctx: ExcelContext, row: ExcelRow, idx: Int) =
+    createCellAnd(ctx, row, idx)(_.setCellValue(value))
 }
 
 case class IntCell(value: Int) extends ICell {
-  def apply(ctx: ExcelContext, row: ExcelRow, idx: Int) = createCellAnd(ctx, row, idx)(_.setCellValue(value))
+  def apply(ctx: ExcelContext, row: ExcelRow, idx: Int) =
+    createCellAnd(ctx, row, idx)(_.setCellValue(value))
 }
 
 case class DateTimeCell(value: DateTime) extends ICell {
   def apply(ctx: ExcelContext, row: ExcelRow, idx: Int) =
-    createCellAnd(ctx, row, idx) {
-      cell =>
-        cell.setCellValue(value.toDate)
-        cell.setCellStyle(ctx.styles.date)
+    createCellAnd(ctx, row, idx) { cell =>
+      cell.setCellValue(value.toDate)
+      cell.setCellStyle(ctx.styles.date)
     }
 }
 
 case class DoubleCell(value: Double) extends ICell {
-  def apply(ctx: ExcelContext, row: ExcelRow, idx: Int) = createCellAnd(ctx, row, idx)(_.setCellValue(value))
+  def apply(ctx: ExcelContext, row: ExcelRow, idx: Int) =
+    createCellAnd(ctx, row, idx)(_.setCellValue(value))
 }
 
-class IRow(cells: ArrayBuffer[ICell]) extends ((ExcelContext, Sheet, Int) => ExcelRow) {
+class IRow(cells: ArrayBuffer[ICell])
+    extends ((ExcelContext, Sheet, Int) => ExcelRow) {
   def +=(more: ICell) = cells += more
   def ++=(more: Iterable[ICell]) = cells ++= more
   def apply(ctx: ExcelContext, sheet: Sheet, idx: Int) = {
@@ -74,23 +87,28 @@ abstract class Excel extends Format {
   type Base = ICell
 
   implicit object StringFormatter extends SimpleFormatter[String] {
-    def apply(value: Option[String]) = value.map(StringCell(_)).getOrElse(NilCell) :: Nil
+    def apply(value: Option[String]) =
+      value.map(StringCell(_)).getOrElse(NilCell) :: Nil
   }
 
   implicit object BooleanFormatter extends SimpleFormatter[Boolean] {
-    def apply(value: Option[Boolean]) = value.map(BooleanCell(_)).getOrElse(NilCell) :: Nil
+    def apply(value: Option[Boolean]) =
+      value.map(BooleanCell(_)).getOrElse(NilCell) :: Nil
   }
 
   implicit object IntFormatter extends SimpleFormatter[Int] {
-    def apply(value: Option[Int]) = value.map(IntCell(_)).getOrElse(NilCell) :: Nil
+    def apply(value: Option[Int]) =
+      value.map(IntCell(_)).getOrElse(NilCell) :: Nil
   }
 
   implicit object DateTimeFormatter extends SimpleFormatter[DateTime] {
-    def apply(value: Option[DateTime]) = value.map(DateTimeCell(_)).getOrElse(NilCell) :: Nil
+    def apply(value: Option[DateTime]) =
+      value.map(DateTimeCell(_)).getOrElse(NilCell) :: Nil
   }
 
   implicit object DoubleFormatter extends SimpleFormatter[Double] {
-    def apply(value: Option[Double]) = value.map(DoubleCell(_)).getOrElse(NilCell) :: Nil
+    def apply(value: Option[Double]) =
+      value.map(DoubleCell(_)).getOrElse(NilCell) :: Nil
   }
 
   object RowProto extends RowProto {
@@ -109,49 +127,54 @@ abstract class Excel extends Format {
     /* There's a better way to stream an *SSF workbook to disk:
      http://poi.apache.org/spreadsheet/how-to.html#sxssf */
     def toStream(out: OutputStream): Writer = toStream(out, name = None)
-    def toStream(out: OutputStream, name: Option[String] = None): Writer = new Writer {
-      def writeMore(rows: Iterator[Row]) = throw new UnsupportedOperationException("not implemented")
-      override def write(rows: Iterator[Row]) {
-        start()
-        Excel(() => new HSSFWorkbook()) {
-          ctx =>
+    def toStream(out: OutputStream, name: Option[String] = None): Writer =
+      new Writer {
+        def writeMore(rows: Iterator[Row]) =
+          throw new UnsupportedOperationException("not implemented")
+        override def write(rows: Iterator[Row]) {
+          start()
+          Excel(() => new HSSFWorkbook()) { ctx =>
             val underlying = toWorkbook(ctx, name = name)
             underlying.write(rows)
             ctx.workbook.write(out)
+          }
+          finish()
         }
-        finish()
+        override def finish() = out.flush()
       }
-      override def finish() = out.flush()
-    }
-    def toWorkbook(ctx: ExcelContext, name: Option[String] = None) = new Writer {
-      private val sheet = name.map(ctx.workbook.createSheet(_)).getOrElse(ctx.workbook.createSheet())
-      private var offset = 0
-      override def start() {
-        val header = RowProto.header(names)
-        header(ctx, sheet, 0)
-        offset += 1
-      }
-      def writeMore(rows: Iterator[Row]) {
-        var written = 0
-        for ((row, rowIdx) <- rows.zipWithIndex) {
-          row(ctx, sheet, offset + rowIdx)
-          written += 1
+    def toWorkbook(ctx: ExcelContext, name: Option[String] = None) =
+      new Writer {
+        private val sheet = name
+          .map(ctx.workbook.createSheet(_))
+          .getOrElse(ctx.workbook.createSheet())
+        private var offset = 0
+        override def start() {
+          val header = RowProto.header(names)
+          header(ctx, sheet, 0)
+          offset += 1
         }
-        offset += written
+        def writeMore(rows: Iterator[Row]) {
+          var written = 0
+          for ((row, rowIdx) <- rows.zipWithIndex) {
+            row(ctx, sheet, offset + rowIdx)
+            written += 1
+          }
+          offset += written
+        }
+        override def write(rows: Iterator[Row]) {
+          start()
+          writeMore(rows)
+          finish()
+        }
       }
-      override def write(rows: Iterator[Row]) {
-        start()
-        writeMore(rows)
-        finish()
-      }
-    }
   }
 
   def writer(names: List[Option[String]]) = new Factory(names)
 }
 
 object Excel {
-  def apply[WB <: Workbook](init: () => WB)(f: ExcelContext => Unit): ExcelContext = {
+  def apply[WB <: Workbook](init: () => WB)(
+      f: ExcelContext => Unit): ExcelContext = {
     val ctx = ExcelContext(init())
     f(ctx)
     ctx

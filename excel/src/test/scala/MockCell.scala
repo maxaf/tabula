@@ -56,7 +56,8 @@ class MockCell(underlying: Cell) extends Cell {
   def getErrorCellValue(): Byte = ???
   def getHyperlink(): org.apache.poi.ss.usermodel.Hyperlink = ???
   def getNumericCellValue(): Double = ???
-  def getRichStringCellValue(): org.apache.poi.ss.usermodel.RichTextString = ???
+  def getRichStringCellValue(): org.apache.poi.ss.usermodel.RichTextString =
+    ???
   def getRow(): org.apache.poi.ss.usermodel.Row = ???
   def getRowIndex(): Int = ???
   def getSheet(): org.apache.poi.ss.usermodel.Sheet = ???

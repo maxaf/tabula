@@ -4,8 +4,7 @@ import shapeless._
 import shapeless.ops.hlist._
 import java.io.{File, OutputStream, FileOutputStream}
 
-trait Writers {
-  self: Format =>
+trait Writers { self: Format =>
 
   abstract class Writer {
     def start() {}
@@ -26,6 +25,9 @@ trait Writers {
 
   type Factory <: WriterFactory
 
-  def writer[F, T, C, NcT <: HList, Col](cols: Col :: NcT)(implicit ev: Col <:< Column[F, T, C], tl: ToList[Col :: NcT, Column[_, _, _]]): Factory = writer(NamedColumn.names(cols))
+  def writer[F, T, C, NcT <: HList, Col](cols: Col :: NcT)(
+      implicit ev: Col <:< Column[F, T, C],
+      tl: ToList[Col :: NcT, Column[_, _, _]]): Factory =
+    writer(NamedColumn.names(cols))
   def writer(names: List[Option[String]]): Factory
 }

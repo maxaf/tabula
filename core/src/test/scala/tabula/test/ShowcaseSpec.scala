@@ -11,22 +11,41 @@ import org.apache.commons.lang3.RandomStringUtils.randomAscii
 
 // a pretend data model
 
-case class UselessItem(name: String, price: Double, tags: Map[String, String] = Map.empty, utterlyUseless: Boolean)
+case class UselessItem(name: String,
+                       price: Double,
+                       tags: Map[String, String] = Map.empty,
+                       utterlyUseless: Boolean)
 case class PretentiousPurveyor(name: String, location: String)
-case class Purchase(item: UselessItem, date: Option[DateTime], from: PretentiousPurveyor, quantity: Int)
+case class Purchase(item: UselessItem,
+                    date: Option[DateTime],
+                    from: PretentiousPurveyor,
+                    quantity: Int)
 
 // some test data
 
 object Items {
-  val justSomeCoatRack = UselessItem("honest abe", 90.39, tags = Map("foo" -> randomAscii(10)), utterlyUseless = false)
-  val cheeseParkingSpot = UselessItem("fancy cheese board", 39.95, tags = Map("foo" -> randomAscii(10), "bar" -> randomAscii(10)), utterlyUseless = true)
-  val whatIsThis = UselessItem("faux professional tool pouch", 48.00, tags = Map("foo" -> randomAscii(10), "quux" -> randomAscii(10)), utterlyUseless = false)
+  val justSomeCoatRack = UselessItem("honest abe",
+                                     90.39,
+                                     tags = Map("foo" -> randomAscii(10)),
+                                     utterlyUseless = false)
+  val cheeseParkingSpot = UselessItem(
+    "fancy cheese board",
+    39.95,
+    tags = Map("foo" -> randomAscii(10), "bar" -> randomAscii(10)),
+    utterlyUseless = true)
+  val whatIsThis = UselessItem(
+    "faux professional tool pouch",
+    48.00,
+    tags = Map("foo" -> randomAscii(10), "quux" -> randomAscii(10)),
+    utterlyUseless = false)
 }
 
 object PlacesNormalPeopleDoNotGo {
-  val SchizophrenicMonkey = PretentiousPurveyor("Tinkering Monkey", "SF Bay Area")
+  val SchizophrenicMonkey =
+    PretentiousPurveyor("Tinkering Monkey", "SF Bay Area")
   val BrooklynSlateWtf = PretentiousPurveyor("Brooklyn Slate Co.", "Brokelyn")
-  val HeritageInsanityCo = PretentiousPurveyor("Heritage Leather Co.", "Somewhere in Cali")
+  val HeritageInsanityCo =
+    PretentiousPurveyor("Heritage Leather Co.", "Somewhere in Cali")
 }
 
 object Purchases {
@@ -34,9 +53,18 @@ object Purchases {
   import PlacesNormalPeopleDoNotGo._
 
   val * = {
-    Purchase(item = justSomeCoatRack, date = Some(DateTime.now), from = SchizophrenicMonkey, quantity = 1) ::
-      Purchase(item = cheeseParkingSpot, date = None, from = BrooklynSlateWtf, quantity = 3) ::
-      Purchase(item = whatIsThis, date = Some(DateTime.now), from = HeritageInsanityCo, quantity = 5) ::
+    Purchase(item = justSomeCoatRack,
+             date = Some(DateTime.now),
+             from = SchizophrenicMonkey,
+             quantity = 1) ::
+      Purchase(item = cheeseParkingSpot,
+               date = None,
+               from = BrooklynSlateWtf,
+               quantity = 3) ::
+      Purchase(item = whatIsThis,
+               date = Some(DateTime.now),
+               from = HeritageInsanityCo,
+               quantity = 5) ::
       Nil
   }
 }
@@ -63,12 +91,13 @@ object Useless extends Column((_: Purchase).item.utterlyUseless)
 
 // tags
 case class Tag(name: String) extends Column((_: Purchase).item.tags.get(name))
-object Tags extends ListColumn(
-  Tag("foo") @@ "tag foo" ::
-    Tag("bar") @@ "tag bar" ::
-    Tag("baz") @@ "tag baz" ::
-    Tag("quux") @@ "tag quux" :: Nil
-)
+object Tags
+    extends ListColumn(
+      Tag("foo") @@ "tag foo" ::
+        Tag("bar") @@ "tag bar" ::
+        Tag("baz") @@ "tag baz" ::
+        Tag("quux") @@ "tag quux" :: Nil
+    )
 
 // transformer column: capitalize words
 object Capitalize extends Column(capitalize)
@@ -82,10 +111,13 @@ object Extensibility {
   case class HTML(nodes: NodeSeq)
 
   // provide a way of lazily converting HTML => Cell[NodeSeq]
-  implicit object HTMLNodeSeqCellulizer extends Cellulizer[HTML, NodeSeq](_.nodes)
+  implicit object HTMLNodeSeqCellulizer
+      extends Cellulizer[HTML, NodeSeq](_.nodes)
 
   // here's a column that produces HTML from Purchase-s
-  object Title extends Column((p: Purchase) => HTML(<title>{ p.item.name }</title>)) with Namer
+  object Title
+      extends Column((p: Purchase) => HTML(<title>{ p.item.name }</title>))
+      with Namer
 
   // create custom console output that overrides some default formats and
   // implements conversion of NodeSeq-s to text
@@ -99,17 +131,18 @@ object Extensibility {
 import Extensibility._
 
 object ShowcaseSpec {
-  object columns extends Columns(
-    (ItemName | Capitalize) @@ "Item Name" ::
-      Title ::
-      Total @@ "Purchase Total ($)" ::
-      Quantity @@ "Number of items bought" ::
-      PurchaseLocation @@ "Bought At" ::
-      DateOfPurchase @@ "Date of Purchase" ::
-      Useless @@ "Was it useless?" ::
-      Tags ::
-      HNil
-  )
+  object columns
+      extends Columns(
+        (ItemName | Capitalize) @@ "Item Name" ::
+          Title ::
+          Total @@ "Purchase Total ($)" ::
+          Quantity @@ "Number of items bought" ::
+          PurchaseLocation @@ "Bought At" ::
+          DateOfPurchase @@ "Date of Purchase" ::
+          Useless @@ "Was it useless?" ::
+          Tags ::
+          HNil
+      )
 }
 
 // let's do it!

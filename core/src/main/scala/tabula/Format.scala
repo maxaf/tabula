@@ -12,6 +12,7 @@ import Tabula._
   * [[Tabula.ColumnAndCell]]s & produce a single [[Row]].
   */
 trait Format extends Poly2 with Writers {
+
   /** Format-specific representation of a cell type. */
   type Base
 
@@ -20,6 +21,7 @@ trait Format extends Poly2 with Writers {
 
   /** Type class that turns a `C` into a subclass of `[[Base]]`. */
   abstract class Formatter[C](implicit val manifest: Manifest[C]) {
+
     /** Cell representation that is a subtype of `[[Base]]` but is
       * specific to this particular `C`.
       */
@@ -41,12 +43,13 @@ trait Format extends Poly2 with Writers {
     type Local = Base
   }
 
-  implicit def listFormatter[C: Manifest](implicit fter: Formatter[C]): Formatter[List[C]] =
+  implicit def listFormatter[C: Manifest](
+      implicit fter: Formatter[C]): Formatter[List[C]] =
     new Formatter[List[C]] {
       type Local = fter.Local
       def apply(value: Option[List[C]]): List[Local] =
         value match {
-          case None         => Nil
+          case None => Nil
           case Some(values) => values.map(Some(_)).map(fter(_)).flatten
         }
     }
@@ -62,16 +65,17 @@ trait Format extends Poly2 with Writers {
     * appending [[Cell]]s to them.
     */
   trait RowProto {
+
     /** Construct an empty [[Row]]. */
     def emptyRow: Row
 
-    def appendCell[C](cell: Cell[C])(row: Row)(implicit fter: Formatter[C]): Row
+    def appendCell[C](cell: Cell[C])(row: Row)(
+        implicit fter: Formatter[C]): Row
 
     def appendBase[T <: Base](value: T)(row: Row): Row
 
     def header(names: List[Option[String]])(implicit fter: Formatter[String]) = {
-      names
-        .iterator
+      names.iterator
         .map(cellulize[String, String])
         .foldLeft(RowProto.emptyRow)(
           (r, c) => RowProto.appendCell[String](c)(r)

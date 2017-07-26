@@ -18,17 +18,20 @@ trait JSON extends Format {
 
   implicit object BooleanFormatter extends Formatter[Boolean] {
     type Local = JBool
-    def apply(value: Option[Boolean]) = value.map(JBool(_)).getOrElse(JBool(false)) :: Nil
+    def apply(value: Option[Boolean]) =
+      value.map(JBool(_)).getOrElse(JBool(false)) :: Nil
   }
 
   implicit object IntFormatter extends Formatter[Int] {
     type Local = JInt
-    def apply(value: Option[Int]) = value.map(JInt(_)).getOrElse(JInt(0)) :: Nil
+    def apply(value: Option[Int]) =
+      value.map(JInt(_)).getOrElse(JInt(0)) :: Nil
   }
 
   implicit object DateTimeFormatter extends Formatter[DateTime] {
     type Local = JInt
-    def apply(value: Option[DateTime]) = value.map(dt => JInt(dt.getMillis)).getOrElse(JInt(0)) :: Nil
+    def apply(value: Option[DateTime]) =
+      value.map(dt => JInt(dt.getMillis)).getOrElse(JInt(0)) :: Nil
   }
 
   implicit object DoubleFormatter extends Formatter[Double] {
@@ -40,7 +43,8 @@ trait JSON extends Format {
 
   object RowProto extends RowProto {
     def emptyRow = JArray(Nil)
-    def appendCell[C](cell: Cell[C])(row: JArray)(implicit fter: Formatter[C]) =
+    def appendCell[C](cell: Cell[C])(row: JArray)(
+        implicit fter: Formatter[C]) =
       row.copy(arr = row.arr ::: fter(cell))
     def appendBase[T <: Base](value: T)(row: Row) =
       row.copy(arr = row.arr ::: value :: Nil)
@@ -56,7 +60,7 @@ trait JSON extends Format {
       }
 
       def writeMore(rows: Iterator[Row]) =
-        rows.map(render).map(pretty).map(","+_).foreach(pw.print)
+        rows.map(render).map(pretty).map("," + _).foreach(pw.print)
 
       override def finish() {
         pw.print("]")

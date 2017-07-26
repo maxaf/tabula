@@ -12,16 +12,20 @@ object ApplyAll {
     def apply(a: A, l: HNil) = HNil
   }
 
-  implicit def hlistApplyAll[A, R, L <: HList, O <: HList](implicit aa: ApplyAll[A, L, O]) =
+  implicit def hlistApplyAll[A, R, L <: HList, O <: HList](
+      implicit aa: ApplyAll[A, L, O]) =
     new ApplyAll[A, (A => R) :: L, R :: O] {
       def apply(a: A, l: (A => R) :: L) = l.head(a) :: aa(a, l.tail)
     }
 
-  implicit def hlistColumnApplyAll[F, T, C, L <: HList, O <: HList, Col](implicit aa: ApplyAll[F, L, O], ev: Col <:< Column[F, T, C]) =
+  implicit def hlistColumnApplyAll[F, T, C, L <: HList, O <: HList, Col](
+      implicit aa: ApplyAll[F, L, O],
+      ev: Col <:< Column[F, T, C]) =
     new ApplyAll[F, Col :: L, ColumnAndCell[F, T, C] :: O] {
       def apply(a: F, l: Col :: L) = l.head(a) :: aa(a, l.tail)
     }
 
-  def apply[A, L <: HList, O <: HList](a: A)(l: L)(implicit aa: ApplyAll[A, L, O]) =
+  def apply[A, L <: HList, O <: HList](a: A)(l: L)(
+      implicit aa: ApplyAll[A, L, O]) =
     aa(a, l)
 }
